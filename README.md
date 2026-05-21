@@ -1,16 +1,86 @@
-# React + Vite
+<div align="center">
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 📋 Task Management Frontend
 
-Currently, two official plugins are available:
+A modern, responsive, and dynamic user interface built with **React** and **Vite**, featuring interactive dashboards, role-based rendering, and containerized deployment via Docker.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[![React](https://img.shields.io/badge/React-18+-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-5+-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com)
 
-## React Compiler
+<br />
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### **[🚀 View Live Demo](https://task-management-reactjs-99o7.onrender.com/)**
 
-## Expanding the ESLint configuration
+</div>
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Folder Structure](#folder-structure)
+- [Environment Variables](#environment-variables)
+- [How to Run Locally](#how-to-run-locally)
+- [Running with Docker](#running-with-docker)
+
+## Features
+- Interactive Dashboards for Users and Admins
+- Real-time Task & Project Management Views
+- Role-based UI Rendering
+- Fully Responsive Design for Mobile and Desktop
+
+## Tech Stack
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Language**: JavaScript (ES6+)
+- **Routing**: React Router
+- **Styling**: CSS / Frontend framework
+
+## Folder Structure
+```text
+src/                  # Main source code folder
+├── app/              # Global app setup (e.g., Redux store configuration)
+├── components/       # Shared UI components (common, layout)
+├── features/         # Feature-based modules (auth, dashboard, projects, tasks, etc.)
+│   └── [feature]/    # Inside each feature:
+│       ├── api/      # Feature-specific API calls
+│       ├── components/# Feature-specific UI components
+│       ├── hooks/    # Feature-specific custom hooks
+│       ├── pages/    # Feature-specific page views
+│       ├── redux/    # Feature-specific state management
+│       └── utils/    # Feature-specific helpers
+├── hooks/            # Global custom React hooks
+├── lib/              # Third-party library configs (e.g., Axios instance)
+├── routes/           # Application routing definitions
+├── styles/           # Global CSS/Tailwind styles
+└── utils/            # Global helper functions and utilities
+```
+
+## Environment Variables
+Create a `.env` file in the root of this folder and populate it with the following required variables:
+
+```env
+VITE_API_BASE_URL=http://localhost:8080/api
+```
+
+## How to Run Locally
+
+1. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+2. **Start the Development Server**:
+   ```bash
+   npm run dev
+   ```
+3. Open your browser and navigate to the URL provided in the terminal (usually `http://localhost:5173`).
+
+## Running with Docker
+
+1. **Build the Docker image**:
+   ```bash
+   docker build -t task-management-frontend .
+   ```
+2. **Run the Docker container**:
+   ```bash
+   docker run -p 80:80 task-management-frontend
+   ```
