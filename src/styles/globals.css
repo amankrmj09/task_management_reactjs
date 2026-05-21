@@ -1,0 +1,25 @@
+@tailwind utilities;
+
+html,
+body,
+#root {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background-color: #f3f4f6;
+    font-family: Inter, sans-serif;
+    color: #111827;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button,
+input,
+textarea,
+select {
+    font: inherit;
+}
