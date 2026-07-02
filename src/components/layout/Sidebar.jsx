@@ -16,6 +16,9 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
   const { glass } = useTheme();
   const { user } = useSelector((state) => state.auth);
   const admin = isAdmin(user);
+  
+  const firstName = user?.name ? user.name.split(" ")[0] : "User";
+  const firstInitial = firstName.charAt(0).toUpperCase();
 
   return (
     <>
@@ -38,10 +41,10 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
       >
         <div className="p-6 flex items-center justify-between border-b border-[var(--border-color)]/50">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[var(--color-primary-light)] to-[var(--color-primary-dark)] flex items-center justify-center shadow-md">
-               <span className="text-white font-bold text-lg leading-none">B</span>
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md">
+               <span className="text-white font-bold text-lg leading-none">{firstInitial}</span>
             </div>
-            <span className="font-bold text-lg tracking-tight text-[var(--text-main)]">Blubug Admin</span>
+            <span className="font-bold text-lg tracking-tight text-[var(--text-main)]">{firstName}</span>
           </div>
           <button className="md:hidden text-[var(--text-muted)] hover:text-[var(--text-main)]" onClick={() => setIsOpen(false)}>
             <X size={20} />

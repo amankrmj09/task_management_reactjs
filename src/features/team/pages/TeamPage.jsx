@@ -10,18 +10,20 @@ import TeamList from "../components/TeamList";
 import InviteMemberModal from "../components/InviteMemberModal";
 import MemberDetailsDialog from "../components/MemberDetailsDialog";
 
+import PaginationControls from "../../../components/common/PaginationControls";
+
 import { showErrorToast, showSuccessToast } from "../../../lib/toast";
 
 function TeamPage() {
   const dispatch = useDispatch();
 
-  const { members, isLoading, error } = useSelector((state) => state.team);
+  const { members, pagination, isLoading, error } = useSelector((state) => state.team);
 
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
-    dispatch(fetchMembers());
+    dispatch(fetchMembers(0, 10));
     dispatch(fetchProjects());
   }, [dispatch]);
 
@@ -63,11 +65,22 @@ function TeamPage() {
       {isLoading ? (
         <p>Loading members...</p>
       ) : (
-        <TeamList 
-          members={members} 
-          onEdit={setSelectedMember} 
-          onDelete={handleDelete}
-        />
+        <div className="space-y-4">
+          <TeamList 
+            members={members} 
+            onEdit={setSelectedMember} 
+            onDelete={handleDelete}
+          />
+          <div className="flex justify-end mt-4">
+            <PaginationControls
+              pageNumber={pagination?.page || 0}
+              totalPages={pagination?.totalPages || 0}
+              isLast={pagination?.page >= (pagination?.totalPages || 1) - 1}
+              onPrevious={() => dispatch(fetchMembers(pagination.page - 1, 10))}
+              onNext={() => dispatch(fetchMembers(pagination.page + 1, 10))}
+            />
+          </div>
+        </div>
       )}
 
       <InviteMemberModal

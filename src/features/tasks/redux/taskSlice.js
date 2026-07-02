@@ -15,7 +15,7 @@ const initialState = {
     status: "",
     assigneeId: "",
     priority: "",
-    overdue: false,
+    overdue: "",
   },
 
   isLoading: false,
@@ -38,8 +38,8 @@ const taskSlice = createSlice({
         state.tasks = payload.content || [];
 
         state.pagination = {
-          page: payload.page || 0,
-          size: payload.size || 10,
+          page: payload.pageNumber || 0,
+          size: payload.pageSize || 10,
           totalPages: payload.totalPages || 0,
           totalElements:
             payload.totalElements || 0,
@@ -95,7 +95,7 @@ const taskSlice = createSlice({
         status: "",
         assigneeId: "",
         priority: "",
-        overdue: false,
+        overdue: "",
       };
     },
 

@@ -1,110 +1,66 @@
 import { useDispatch, useSelector } from "react-redux";
-
-import {
-  resetFilters,
-  setFilters,
-} from "../redux/taskSlice";
+import { resetFilters, setFilters } from "../redux/taskSlice";
+import Dropdown from "../../../components/common/Dropdown";
 
 function TaskFilters() {
   const dispatch = useDispatch();
 
-  const { filters } = useSelector(
-    (state) => state.tasks
-  );
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    dispatch(
-      setFilters({
-        [name]: value,
-      })
-    );
-  };
+  const { filters } = useSelector((state) => state.tasks);
 
   const handleReset = () => {
     dispatch(resetFilters());
   };
 
+  const hasActiveFilters = Boolean(filters.status || filters.priority || filters.overdue);
+
   return (
-    <div className="rounded-2xl glass-card p-6 shadow-sm">
+    <div className="relative z-50 rounded-2xl glass-card p-6 shadow-sm border border-[var(--border-color)]">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
-        <select
-          name="status"
-          value={filters.status}
-          onChange={handleChange}
-          className="rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
-        >
-          <option value="">
-            All Status
-          </option>
+        <Dropdown
+          fullWidth
+          label={filters.status ? filters.status.replace("_", " ") : "All Status"}
+          onSelect={(val) => dispatch(setFilters({ status: val }))}
+          items={[
+            { label: "All Status", value: "" },
+            { label: "TODO", value: "TODO" },
+            { label: "IN PROGRESS", value: "IN_PROGRESS" },
+            { label: "IN REVIEW", value: "IN_REVIEW" },
+            { label: "DONE", value: "DONE" },
+          ]}
+        />
 
-          <option value="TODO">
-            TODO
-          </option>
+        <Dropdown
+          fullWidth
+          label={filters.priority || "All Priority"}
+          onSelect={(val) => dispatch(setFilters({ priority: val }))}
+          items={[
+            { label: "All Priority", value: "" },
+            { label: "LOW", value: "LOW" },
+            { label: "MEDIUM", value: "MEDIUM" },
+            { label: "HIGH", value: "HIGH" },
+            { label: "CRITICAL", value: "CRITICAL" },
+          ]}
+        />
 
-          <option value="IN_PROGRESS">
-            IN_PROGRESS
-          </option>
-
-          <option value="IN_REVIEW">
-            IN_REVIEW
-          </option>
-
-          <option value="DONE">
-            DONE
-          </option>
-        </select>
-
-        <select
-          name="priority"
-          value={filters.priority}
-          onChange={handleChange}
-          className="rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
-        >
-          <option value="">
-            All Priority
-          </option>
-
-          <option value="LOW">
-            LOW
-          </option>
-
-          <option value="MEDIUM">
-            MEDIUM
-          </option>
-
-          <option value="HIGH">
-            HIGH
-          </option>
-
-          <option value="CRITICAL">
-            CRITICAL
-          </option>
-        </select>
-
-        <select
-          name="overdue"
-          value={filters.overdue}
-          onChange={handleChange}
-          className="rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
-        >
-          <option value="">
-            Overdue
-          </option>
-
-          <option value="true">
-            Yes
-          </option>
-
-          <option value="false">
-            No
-          </option>
-        </select>
+        <Dropdown
+          fullWidth
+          label={filters.overdue === "true" ? "Yes" : filters.overdue === "false" ? "No" : "Overdue"}
+          onSelect={(val) => dispatch(setFilters({ overdue: val }))}
+          items={[
+            { label: "Overdue", value: "" },
+            { label: "Yes", value: "true" },
+            { label: "No", value: "false" },
+          ]}
+        />
 
         <button
           onClick={handleReset}
-          className="rounded-xl bg-[var(--bg-panel-hover)] px-5 py-3 font-medium text-white transition hover:bg-[var(--bg-panel-hover)]"
+          disabled={!hasActiveFilters}
+          className={`rounded-xl px-5 py-3 font-medium transition ${
+            hasActiveFilters
+              ? "bg-[var(--color-primary)] text-white hover:opacity-90 shadow-sm hover:shadow"
+              : "bg-[var(--bg-panel-hover)] text-[var(--text-muted)] cursor-not-allowed opacity-60"
+          }`}
         >
           Reset Filters
         </button>

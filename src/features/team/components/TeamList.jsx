@@ -18,6 +18,7 @@ function TeamList({ members, onEdit, onDelete }) {
         <table className="w-full text-left text-sm text-[var(--text-main)]">
           <thead className="bg-[var(--bg-panel-hover)] text-xs uppercase text-[var(--text-muted)] border-b border-[var(--border-color)]">
             <tr>
+              <th className="px-6 py-4 font-medium w-16">S.No.</th>
               <th className="px-6 py-4 font-medium">Name</th>
               <th className="px-6 py-4 font-medium">Email</th>
               <th className="px-6 py-4 font-medium">Role</th>
@@ -25,8 +26,9 @@ function TeamList({ members, onEdit, onDelete }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-[var(--border-color)]">
-            {members.map((member) => (
+            {members.map((member, index) => (
               <tr key={member.id} className="transition-colors hover:bg-[var(--bg-panel-hover)]/50">
+                <td className="px-6 py-4 text-[var(--text-muted)]">{index + 1}</td>
                 <td className="px-6 py-4 font-medium">{member.name}</td>
                 <td className="px-6 py-4 text-[var(--text-muted)]">{member.email}</td>
                 <td className="px-6 py-4">

@@ -51,7 +51,7 @@ function Dropdown({
 
       {isOpen && (
         <div
-          className={`absolute z-20 mt-2 min-w-[12rem] rounded-xl border border-[var(--border-color)] glass-card p-2 shadow-lg ${
+          className={`absolute z-50 mt-2 min-w-[12rem] rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] p-2 shadow-xl ${
             align === "right" ? "right-0" : "left-0"
           }`}
         >

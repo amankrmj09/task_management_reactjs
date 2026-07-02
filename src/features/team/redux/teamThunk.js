@@ -22,11 +22,7 @@ export const fetchMembers =
         size
       );
 
-      dispatch(
-        setMembers(
-          Array.isArray(data) ? data : data.content || []
-        )
-      );
+      dispatch(setMembers(data));
 
       return { success: true };
     } catch (error) {

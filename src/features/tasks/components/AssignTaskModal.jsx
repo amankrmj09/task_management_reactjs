@@ -42,7 +42,7 @@ function AssignTaskModal({
             <select
               value={assigneeEmail}
               onChange={(e) => setAssigneeEmail(e.target.value)}
-              className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
+              className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] text-[var(--text-main)] px-4 py-3 outline-none transition focus:border-[var(--color-primary)]"
             >
               <option value="">
                 Select member

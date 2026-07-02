@@ -5,7 +5,7 @@ function AuthWrapper({ title, subtitle, children, footer }) {
   const { glass } = useTheme();
 
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-transparent overflow-hidden px-4">
+    <div className="flex min-h-screen w-full items-center justify-center bg-transparent px-4 py-8 overflow-y-auto">
       <div className={cn(
         "w-full max-w-[440px] rounded-2xl p-6 sm:p-8 relative z-10 transition-all duration-300",
         glass 

@@ -18,55 +18,53 @@ function TaskCard({ task }) {
   return (
     <Link
       to={`/tasks/${task.id}`}
-      className="block rounded-2xl glass-card p-6 shadow-sm transition hover:shadow-md"
+      className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-xl glass-card p-4 sm:p-5 shadow-sm transition hover:shadow-md hover:border-blue-500/30 gap-4"
     >
-        <div className="flex items-start justify-between">
-          <div className="min-w-0 flex-1">
-            <h2 className="text-lg font-semibold text-[var(--text-main)]">
-              {task.title}
-            </h2>
+      <div className="flex-1 min-w-0">
+        <h2 className="text-lg font-semibold text-[var(--text-main)] truncate">
+          {task.title}
+        </h2>
 
-            {task.description && (
-              <p className="mt-1 text-sm text-[var(--text-muted)] line-clamp-2">
-                {task.description}
-              </p>
-            )}
-          </div>
+        {task.description && (
+          <p className="mt-1 text-sm text-[var(--text-muted)] truncate">
+            {task.description}
+          </p>
+        )}
+      </div>
 
-          <span
-            className={`ml-3 shrink-0 rounded-full px-3 py-1 text-xs font-medium ${
-              STATUS_COLORS[task.status] || STATUS_COLORS.TODO
-            }`}
-          >
-            {task.status?.replace("_", " ")}
-          </span>
-        </div>
+      <div className="flex flex-wrap items-center gap-3 shrink-0">
+        <span
+          className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+            PRIORITY_COLORS[task.priority] || PRIORITY_COLORS.MEDIUM
+          }`}
+        >
+          {task.priority}
+        </span>
 
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <span
-            className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${
-              PRIORITY_COLORS[task.priority] || PRIORITY_COLORS.MEDIUM
-            }`}
-          >
-            {task.priority}
-          </span>
-
-          {task.dueDate && (
-            <span className="text-xs text-[var(--text-muted)]">
-              Due:{" "}
-              {new Date(task.dueDate).toLocaleDateString("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </span>
-          )}
-
+        {task.dueDate && (
           <span className="text-xs text-[var(--text-muted)]">
-            {task.assignee?.name || "Unassigned"}
+            Due:{" "}
+            {new Date(task.dueDate).toLocaleDateString("en-US", {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            })}
           </span>
-        </div>
-      </Link>
+        )}
+
+        <span className="text-xs text-[var(--text-muted)] w-24 truncate text-right">
+          {task.assignee?.name || "Unassigned"}
+        </span>
+
+        <span
+          className={`ml-2 shrink-0 rounded-full px-3 py-1 text-xs font-medium ${
+            STATUS_COLORS[task.status] || STATUS_COLORS.TODO
+          }`}
+        >
+          {task.status?.replace("_", " ")}
+        </span>
+      </div>
+    </Link>
   );
 }
 

@@ -17,10 +17,12 @@ import TaskFilters from "../components/TaskFilters";
 import TaskForm from "../components/TaskForm";
 import KanbanBoard from "../components/KanbanBoard";
 
+import PaginationControls from "../../../components/common/PaginationControls";
+
 function TasksPage() {
   const dispatch = useDispatch();
 
-  const { tasks, filters, isLoading } = useSelector(
+  const { tasks, pagination, filters, isLoading } = useSelector(
     (state) => state.tasks
   );
 
@@ -37,9 +39,13 @@ function TasksPage() {
 
   useEffect(() => {
     if (selectedProject?.id) {
-      dispatch(fetchTasks(selectedProject.id, filters));
+      if (viewMode === "kanban") {
+        dispatch(fetchTasks(selectedProject.id, { ...filters, unpaginated: true }));
+      } else {
+        dispatch(fetchTasks(selectedProject.id, { ...filters, page: 0 }));
+      }
     }
-  }, [dispatch, selectedProject, filters]);
+  }, [dispatch, selectedProject, filters, viewMode]);
 
   const handleProjectChange = (e) => {
     const projectId = e.target.value;
@@ -120,7 +126,22 @@ function TasksPage() {
           ) : viewMode === "kanban" ? (
             <KanbanBoard tasks={tasks || []} />
           ) : (
-            <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
+            <div className="space-y-4">
+              <TaskList tasks={tasks} onDeleteTask={handleDeleteTask} />
+              <div className="flex justify-end mt-4">
+                <PaginationControls
+                  pageNumber={pagination?.page || 0}
+                  totalPages={pagination?.totalPages || 0}
+                  isLast={pagination?.page >= (pagination?.totalPages || 1) - 1}
+                  onPrevious={() =>
+                    dispatch(fetchTasks(selectedProject.id, { ...filters, page: pagination.page - 1 }))
+                  }
+                  onNext={() =>
+                    dispatch(fetchTasks(selectedProject.id, { ...filters, page: pagination.page + 1 }))
+                  }
+                />
+              </div>
+            </div>
           )}
         </>
       )}

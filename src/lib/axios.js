@@ -22,6 +22,9 @@ export const extractData = (response) => {
     !Array.isArray(body) &&
     "data" in body
   ) {
+    if ("pagination" in body) {
+      return { content: body.data, ...body.pagination };
+    }
     return body.data;
   }
   return body;

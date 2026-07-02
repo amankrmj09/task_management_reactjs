@@ -20,7 +20,7 @@ function Input({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`w-full rounded-xl border px-4 py-3 outline-none transition focus:border-[var(--color-primary)] ${
+        className={`w-full rounded-xl border bg-[var(--bg-panel)] text-[var(--text-main)] px-4 py-3 outline-none transition focus:border-[var(--color-primary)] ${
           error
             ? "border-red-500"
             : "border-[var(--border-color)]"

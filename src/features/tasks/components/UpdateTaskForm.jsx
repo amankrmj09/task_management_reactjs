@@ -89,7 +89,7 @@ function UpdateTaskForm({ task, onSuccess }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl glass-card p-6 shadow-sm"
+      className="space-y-5"
     >
       <Input
         label="Title"
@@ -123,7 +123,7 @@ function UpdateTaskForm({ task, onSuccess }) {
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
+            className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] text-[var(--text-main)] px-4 py-3 outline-none transition focus:border-[var(--color-primary)]"
           >
             {Object.values(TASK_STATUS).map((status) => (
               <option key={status} value={status}>
@@ -139,7 +139,7 @@ function UpdateTaskForm({ task, onSuccess }) {
             name="priority"
             value={formData.priority}
             onChange={handleChange}
-            className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
+            className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] text-[var(--text-main)] px-4 py-3 outline-none transition focus:border-[var(--color-primary)]"
           >
             {Object.values(TASK_PRIORITY).map((priority) => (
               <option key={priority} value={priority}>

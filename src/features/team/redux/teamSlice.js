@@ -2,20 +2,33 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   members: [],
-
+  pagination: {
+    page: 0,
+    size: 10,
+    totalPages: 0,
+    totalElements: 0,
+  },
   isLoading: false,
-
   error: null,
 };
 
 const teamSlice = createSlice({
   name: "team",
-
   initialState,
-
   reducers: {
     setMembers: (state, action) => {
-      state.members = action.payload;
+      const payload = action.payload;
+      if (Array.isArray(payload)) {
+        state.members = payload;
+      } else {
+        state.members = payload.content || [];
+        state.pagination = {
+          page: payload.pageNumber || 0,
+          size: payload.pageSize || 10,
+          totalPages: payload.totalPages || 0,
+          totalElements: payload.totalElements || 0,
+        };
+      }
     },
 
     addMember: (state, action) => {
