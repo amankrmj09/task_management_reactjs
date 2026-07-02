@@ -11,54 +11,54 @@ const STATUS_LABELS = {
 
 const STATUS_COLORS = {
   TODO: {
-    bg: "bg-slate-50",
-    header: "bg-slate-200",
-    text: "text-slate-700",
-    badge: "bg-slate-100 text-slate-600",
-    accent: "border-l-slate-400",
+    bg: "glass-panel bg-slate-50/50 dark:bg-slate-900/30",
+    header: "border-b border-slate-200 dark:border-slate-800",
+    text: "text-slate-700 dark:text-slate-300",
+    badge: "bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300",
+    accent: "border-l-slate-400 dark:border-l-slate-500",
   },
   IN_PROGRESS: {
-    bg: "bg-blue-50",
-    header: "bg-blue-200",
-    text: "text-blue-700",
-    badge: "bg-blue-100 text-blue-600",
+    bg: "glass-panel bg-blue-50/50 dark:bg-blue-900/20",
+    header: "border-b border-blue-200 dark:border-blue-900/50",
+    text: "text-blue-700 dark:text-blue-400",
+    badge: "bg-blue-200 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400",
     accent: "border-l-blue-500",
   },
   IN_REVIEW: {
-    bg: "bg-amber-50",
-    header: "bg-amber-200",
-    text: "text-amber-700",
-    badge: "bg-amber-100 text-amber-600",
+    bg: "glass-panel bg-amber-50/50 dark:bg-amber-900/20",
+    header: "border-b border-amber-200 dark:border-amber-900/50",
+    text: "text-amber-700 dark:text-amber-400",
+    badge: "bg-amber-200 dark:bg-amber-900/50 text-amber-700 dark:text-amber-400",
     accent: "border-l-amber-500",
   },
   DONE: {
-    bg: "bg-green-50",
-    header: "bg-green-200",
-    text: "text-green-700",
-    badge: "bg-green-100 text-green-600",
+    bg: "glass-panel bg-green-50/50 dark:bg-green-900/20",
+    header: "border-b border-green-200 dark:border-green-900/50",
+    text: "text-green-700 dark:text-green-400",
+    badge: "bg-green-200 dark:bg-green-900/50 text-green-700 dark:text-green-400",
     accent: "border-l-green-500",
   },
 };
 
 const PRIORITY_COLORS = {
-  LOW: "bg-gray-100 text-gray-600",
-  MEDIUM: "bg-blue-100 text-blue-700",
-  HIGH: "bg-orange-100 text-orange-700",
-  CRITICAL: "bg-red-100 text-red-700",
+  LOW: "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300",
+  MEDIUM: "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400",
+  HIGH: "bg-orange-100 dark:bg-orange-900/50 text-orange-700 dark:text-orange-400",
+  CRITICAL: "bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-400",
 };
 
 function KanbanCard({ task, statusColor }) {
   return (
     <Link
       to={`/tasks/${task.id}`}
-      className={`block rounded-xl border-l-4 bg-white p-3 shadow-sm transition hover:shadow-md ${statusColor.accent}`}
+      className={`block rounded-xl border-l-4 glass-card p-3 shadow-sm transition hover:shadow-md ${statusColor.accent}`}
     >
-      <h3 className="text-sm font-semibold text-gray-800 line-clamp-2">
+      <h3 className="text-sm font-semibold text-[var(--text-main)] line-clamp-2">
         {task.title}
       </h3>
 
       {task.description && (
-        <p className="mt-1 text-xs text-gray-500 line-clamp-2">
+        <p className="mt-1 text-xs text-[var(--text-muted)] line-clamp-2">
           {task.description}
         </p>
       )}
@@ -73,7 +73,7 @@ function KanbanCard({ task, statusColor }) {
         </span>
 
         {task.dueDate && (
-          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-[10px] font-medium text-gray-600">
+          <span className="rounded-full bg-[var(--bg-panel-hover)] px-2 py-0.5 text-[10px] font-medium text-[var(--text-muted)]">
             {new Date(task.dueDate).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
@@ -87,7 +87,7 @@ function KanbanCard({ task, statusColor }) {
           {task.assignee?.name?.charAt(0)?.toUpperCase() || "?"}
         </div>
 
-        <span className="text-xs text-gray-500 truncate">
+        <span className="text-xs text-[var(--text-muted)] truncate">
           {task.assignee?.name || "Unassigned"}
         </span>
       </div>
@@ -136,8 +136,8 @@ function KanbanBoard({ tasks }) {
 
               <div className="flex flex-1 flex-col gap-3 p-3">
                 {columnTasks.length === 0 ? (
-                  <div className="flex items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-8">
-                    <p className="text-xs text-gray-400">No tasks</p>
+                  <div className="flex items-center justify-center rounded-xl border-2 border-dashed border-[var(--border-color)] py-8">
+                    <p className="text-xs text-[var(--text-muted)]">No tasks</p>
                   </div>
                 ) : (
                   columnTasks.map((task) => (

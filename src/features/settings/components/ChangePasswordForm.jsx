@@ -70,7 +70,7 @@ function ChangePasswordForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl bg-white p-6 shadow-sm"
+      className="space-y-5 rounded-2xl glass-card p-6 shadow-sm"
     >
       <Input
         label="Current Password"

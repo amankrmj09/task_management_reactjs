@@ -35,14 +35,14 @@ function AssignTaskModal({
       >
         {members.length > 0 ? (
           <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
+            <label className="text-sm font-medium text-[var(--text-main)]">
               Select Member
             </label>
 
             <select
               value={assigneeEmail}
               onChange={(e) => setAssigneeEmail(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+              className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
             >
               <option value="">
                 Select member

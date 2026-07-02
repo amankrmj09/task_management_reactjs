@@ -69,12 +69,13 @@ function ProjectsPage() {
         actions={
           <>
             {admin ? (
-              <Button onClick={() => setIsCreateOpen(true)}>
+              <Button className="!px-4 !py-2 h-[42px]" onClick={() => setIsCreateOpen(true)}>
                 New Project
               </Button>
             ) : (
               <Button
                 variant="secondary"
+                className="!px-4 !py-2 h-[42px]"
                 onClick={() => setIsJoinOpen(true)}
               >
                 Request to Join
@@ -115,7 +116,7 @@ function ProjectsPage() {
             onChange={setJoinProjectId}
           />
 
-          <p className="text-sm text-gray-500">
+          <p className="text-sm text-[var(--text-muted)]">
             A request will be sent to the project administrators.
           </p>
 

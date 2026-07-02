@@ -3,15 +3,15 @@ function Table({
   data,
 }) {
   return (
-    <div className="overflow-hidden rounded-2xl bg-white shadow-sm">
+    <div className="overflow-hidden rounded-2xl glass-card shadow-sm">
       <div className="overflow-x-auto">
         <table className="min-w-full">
-          <thead className="bg-gray-100">
+          <thead className="bg-[var(--bg-panel-hover)]">
             <tr>
               {columns.map((column) => (
                 <th
                   key={column.key}
-                  className="px-6 py-4 text-left text-sm font-semibold text-gray-700"
+                  className="px-6 py-4 text-left text-sm font-semibold text-[var(--text-main)]"
                 >
                   {column.title}
                 </th>
@@ -28,7 +28,7 @@ function Table({
                 {columns.map((column) => (
                   <td
                     key={column.key}
-                    className="px-6 py-4 text-sm text-gray-700"
+                    className="px-6 py-4 text-sm text-[var(--text-main)]"
                   >
                     {column.render
                       ? column.render(row)

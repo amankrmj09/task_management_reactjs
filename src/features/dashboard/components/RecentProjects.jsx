@@ -8,19 +8,19 @@ function RecentProjects() {
     stats?.recentProjects || adminStats?.recentProjects || [];
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-xl font-semibold text-gray-800">
+    <div className="rounded-2xl glass-card p-6 shadow-sm">
+      <h2 className="mb-4 text-xl font-semibold text-[var(--text-main)]">
         Recent Projects
       </h2>
 
       <div className="space-y-4">
         {recentProjects.length > 0 ? (
           recentProjects.slice(0, 4).map((project) => (
-            <Link key={project.id} to={`/projects/${project.id}`} className="group flex items-center justify-between rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-200">
+            <Link key={project.id} to={`/projects/${project.id}`} className="group flex items-center justify-between rounded-xl border border-[var(--border-color)] glass-card p-4 shadow-sm transition hover:shadow-md hover:border-[var(--border-color)]">
               <div>
-                <h3 className="font-medium text-gray-800 transition-colors group-hover:text-blue-600">{project.name}</h3>
+                <h3 className="font-medium text-[var(--text-main)] transition-colors group-hover:text-blue-600">{project.name}</h3>
                 <div className="mt-1 flex items-center gap-3">
-                  <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide uppercase ${project.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'}`}>
+                  <span className={`inline-block rounded-full px-2 py-0.5 text-[10px] font-bold tracking-wide uppercase ${project.status === 'ACTIVE' ? 'bg-green-100 text-green-700' : 'bg-[var(--bg-panel-hover)] text-[var(--text-main)]'}`}>
                     {project.status.replace("_", " ")}
                   </span>
                   {project.pendingTasks > 0 && (
@@ -36,7 +36,7 @@ function RecentProjects() {
             </Link>
           ))
         ) : (
-          <p className="text-gray-500">No recent projects</p>
+          <p className="text-[var(--text-muted)]">No recent projects</p>
         )}
       </div>
     </div>

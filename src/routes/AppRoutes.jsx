@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import ProtectedRoute from "../components/layout/ProtectedRoute";
-import DashboardLayout from "../components/layout/DashboardLayout";
+import { ProtectedRoute } from "../components/layout/ProtectedRoute";
+import { IslandLayout } from "../components/layout/IslandLayout";
 
 import LoginPage from "../features/auth/pages/LoginPage";
 import SignupPage from "../features/auth/pages/SignupPage";
@@ -27,87 +27,18 @@ function AppRoutes() {
       <Route path="/" element={<Navigate to={ROUTES.DASHBOARD} />} />
 
       <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-
       <Route path={ROUTES.SIGNUP} element={<SignupPage />} />
-
       <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPasswordPage />} />
 
-      <Route
-        path={ROUTES.DASHBOARD}
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <DashboardPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path={ROUTES.PROJECTS}
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <ProjectsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path={ROUTES.PROJECT_DETAILS}
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <ProjectDetailsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path={ROUTES.TASKS}
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <TasksPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path={ROUTES.TASK_DETAILS}
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <TaskDetailsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path={ROUTES.TEAM}
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <TeamPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
-
-      <Route
-        path={ROUTES.SETTINGS}
-        element={
-          <ProtectedRoute>
-            <DashboardLayout>
-              <SettingsPage />
-            </DashboardLayout>
-          </ProtectedRoute>
-        }
-      />
+      <Route element={<ProtectedRoute><IslandLayout /></ProtectedRoute>}>
+        <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
+        <Route path={ROUTES.PROJECTS} element={<ProjectsPage />} />
+        <Route path={ROUTES.PROJECT_DETAILS} element={<ProjectDetailsPage />} />
+        <Route path={ROUTES.TASKS} element={<TasksPage />} />
+        <Route path={ROUTES.TASK_DETAILS} element={<TaskDetailsPage />} />
+        <Route path={ROUTES.TEAM} element={<TeamPage />} />
+        <Route path={ROUTES.SETTINGS} element={<SettingsPage />} />
+      </Route>
     </Routes>
   );
 }

@@ -11,7 +11,7 @@ function ForgotPasswordPage() {
       title="Reset Password"
       subtitle="Enter your email to receive a reset link"
       footer={
-        <p className="text-center text-sm text-gray-500">
+        <p className="text-center text-sm text-[var(--text-muted)]">
           Remembered your password?{" "}
           <Link
             to={ROUTES.LOGIN}

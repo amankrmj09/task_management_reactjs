@@ -5,7 +5,7 @@ import TaskCard from "../../tasks/components/TaskCard";
 
 function ProjectDetails({ project, actions, onRemoveMember }) {
   if (!project) {
-    return <p className="text-gray-500">No project selected</p>;
+    return <p className="text-[var(--text-muted)]">No project selected</p>;
   }
 
   const recentTasks = project.recentTasks || project.tasks || [];
@@ -24,8 +24,8 @@ function ProjectDetails({ project, actions, onRemoveMember }) {
       <ProjectStats taskCounts={computedTaskCounts} />
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-800">Members</h2>
+        <div className="rounded-2xl glass-card p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-[var(--text-main)]">Members</h2>
 
           <MemberList
             members={project.members || []}
@@ -33,8 +33,8 @@ function ProjectDetails({ project, actions, onRemoveMember }) {
           />
         </div>
 
-        <div className="rounded-2xl bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xl font-semibold text-gray-800">
+        <div className="rounded-2xl glass-card p-6 shadow-sm">
+          <h2 className="mb-4 text-xl font-semibold text-[var(--text-main)]">
             Recent Tasks
           </h2>
 
@@ -44,7 +44,7 @@ function ProjectDetails({ project, actions, onRemoveMember }) {
                 <TaskCard key={task.id} task={task} />
               ))
             ) : (
-              <p className="text-gray-500">No recent tasks</p>
+              <p className="text-[var(--text-muted)]">No recent tasks</p>
             )}
           </div>
         </div>

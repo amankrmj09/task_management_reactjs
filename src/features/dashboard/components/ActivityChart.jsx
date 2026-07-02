@@ -34,30 +34,30 @@ function ActivityChart() {
   const maxValue = Math.max(...activity.map((item) => item.value), 1);
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-xl font-semibold text-gray-800">Activity</h2>
+    <div className="rounded-2xl glass-card p-6 shadow-sm">
+      <h2 className="mb-4 text-xl font-semibold text-[var(--text-main)]">Activity</h2>
 
       {activity.length === 0 ? (
-        <p className="text-gray-500">No pending join requests</p>
+        <p className="text-[var(--text-muted)]">No pending join requests</p>
       ) : (
         <div className="space-y-4">
           {activity.map((item) => {
             const innerContent = (
               <>
-                <h3 className="font-medium text-gray-800 transition-colors group-hover:text-blue-600">{item.label}</h3>
+                <h3 className="font-medium text-[var(--text-main)] transition-colors group-hover:text-blue-600">{item.label}</h3>
                 <div className="flex flex-col items-end">
                   <span className="text-lg font-bold text-blue-600">{item.value}</span>
-                  <span className="text-xs text-gray-500">Pending</span>
+                  <span className="text-xs text-[var(--text-muted)]">Pending</span>
                 </div>
               </>
             );
 
             return item.projectId ? (
-              <Link key={item.label} to={`/projects/${item.projectId}`} className="group flex items-center justify-between rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-200">
+              <Link key={item.label} to={`/projects/${item.projectId}`} className="group flex items-center justify-between rounded-xl border border-[var(--border-color)] glass-card p-4 shadow-sm transition hover:shadow-md hover:border-[var(--border-color)]">
                 {innerContent}
               </Link>
             ) : (
-              <div key={item.label} className="flex items-center justify-between rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-200">
+              <div key={item.label} className="flex items-center justify-between rounded-xl border border-[var(--border-color)] glass-card p-4 shadow-sm transition hover:shadow-md hover:border-[var(--border-color)]">
                 {innerContent}
               </div>
             );

@@ -5,7 +5,7 @@ function MemberList({ members = [], onRemove }) {
 
   if (!members.length) {
     return (
-      <p className="text-gray-500">
+      <p className="text-[var(--text-muted)]">
         No members found
       </p>
     );
@@ -34,11 +34,11 @@ function MemberList({ members = [], onRemove }) {
             </div>
 
             <div className="min-w-0">
-              <h3 className="truncate font-semibold text-gray-800">
+              <h3 className="truncate font-semibold text-[var(--text-main)]">
                 {member.name}
               </h3>
 
-              <p className="truncate text-sm text-gray-500">
+              <p className="truncate text-sm text-[var(--text-muted)]">
                 {member.email}
               </p>
             </div>

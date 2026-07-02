@@ -65,14 +65,14 @@ function TasksPage() {
               onSelect={(value) => handleProjectChange({ target: { value } })}
             />
 
-            <div className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white p-1">
+            <div className="flex items-center gap-2 rounded-xl border border-[var(--border-color)] glass-card p-1">
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
                   viewMode === "list"
                     ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:bg-gray-100"
+                    : "text-[var(--text-muted)] hover:bg-[var(--bg-panel-hover)]"
                 }`}
               >
                 List
@@ -83,7 +83,7 @@ function TasksPage() {
                 className={`rounded-lg px-3 py-2 text-sm font-medium transition ${
                   viewMode === "kanban"
                     ? "bg-blue-600 text-white"
-                    : "text-gray-600 hover:bg-gray-100"
+                    : "text-[var(--text-muted)] hover:bg-[var(--bg-panel-hover)]"
                 }`}
               >
                 Kanban
@@ -91,6 +91,7 @@ function TasksPage() {
             </div>
 
             <Button
+              className="!px-4 !text-sm"
               onClick={() => setIsCreateOpen(true)}
               disabled={!selectedProject?.id}
             >
@@ -101,12 +102,12 @@ function TasksPage() {
       />
 
       {!selectedProject?.id ? (
-        <div className="rounded-2xl bg-white p-10 text-center shadow-sm">
-          <h2 className="text-xl font-semibold text-gray-700">
+        <div className="rounded-2xl glass-card p-10 text-center shadow-sm">
+          <h2 className="text-xl font-semibold text-[var(--text-main)]">
             No Project Selected
           </h2>
 
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-[var(--text-muted)]">
             Select a project from the dropdown above to view its tasks.
           </p>
         </div>

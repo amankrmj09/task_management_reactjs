@@ -3,12 +3,12 @@ import ProjectCard from "./ProjectCard";
 function ProjectList({ projects, onDeleteProject }) {
   if (!projects?.length) {
     return (
-      <div className="rounded-2xl bg-white p-10 text-center shadow-sm">
-        <h2 className="text-xl font-semibold text-gray-700">
+      <div className="rounded-2xl glass-card p-10 text-center shadow-sm">
+        <h2 className="text-xl font-semibold text-[var(--text-main)]">
           No Projects Found
         </h2>
 
-        <p className="mt-2 text-gray-500">
+        <p className="mt-2 text-[var(--text-muted)]">
           Create your first project
         </p>
       </div>

@@ -89,7 +89,7 @@ function UpdateTaskForm({ task, onSuccess }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl bg-white p-6 shadow-sm"
+      className="space-y-5 rounded-2xl glass-card p-6 shadow-sm"
     >
       <Input
         label="Title"
@@ -118,12 +118,12 @@ function UpdateTaskForm({ task, onSuccess }) {
 
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Status</label>
+          <label className="text-sm font-medium text-[var(--text-main)]">Status</label>
           <select
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+            className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
           >
             {Object.values(TASK_STATUS).map((status) => (
               <option key={status} value={status}>
@@ -134,12 +134,12 @@ function UpdateTaskForm({ task, onSuccess }) {
         </div>
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">Priority</label>
+          <label className="text-sm font-medium text-[var(--text-main)]">Priority</label>
           <select
             name="priority"
             value={formData.priority}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+            className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
           >
             {Object.values(TASK_PRIORITY).map((priority) => (
               <option key={priority} value={priority}>

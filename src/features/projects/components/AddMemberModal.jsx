@@ -54,7 +54,7 @@ function AddMemberModal({ isOpen, onClose, projectId, onSuccess }) {
         />
 
         <div className="space-y-2">
-          <label className="text-sm font-medium text-gray-700">
+          <label className="text-sm font-medium text-[var(--text-main)]">
             Project Role
           </label>
 
@@ -62,7 +62,7 @@ function AddMemberModal({ isOpen, onClose, projectId, onSuccess }) {
             name="projectRole"
             value={formData.projectRole}
             onChange={handleChange}
-            className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+            className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
           >
             <option value="CONTRIBUTOR">CONTRIBUTOR</option>
 

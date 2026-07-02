@@ -16,7 +16,7 @@ function Pagination({
         Previous
       </Button>
 
-      <span className="font-medium text-gray-700">
+      <span className="font-medium text-[var(--text-main)]">
         Page {page + 1} of {totalPages}
       </span>
 

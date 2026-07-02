@@ -54,7 +54,7 @@ function ProjectSearchDropdown({ value, onChange }) {
 
   return (
     <div className="relative w-full" ref={dropdownRef}>
-      <label className="mb-2 block text-sm font-medium text-gray-700">
+      <label className="mb-2 block text-sm font-medium text-[var(--text-main)]">
         Search Project
       </label>
       <input
@@ -71,7 +71,7 @@ function ProjectSearchDropdown({ value, onChange }) {
           if (results.length > 0) setIsOpen(true);
         }}
         placeholder="Type to search for projects..."
-        className="w-full rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+        className="w-full rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
       />
 
       {isSearching && (
@@ -81,22 +81,22 @@ function ProjectSearchDropdown({ value, onChange }) {
       )}
 
       {isOpen && query.trim() && !isSearching && (
-        <div className="absolute z-10 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-gray-200 bg-white py-1 shadow-lg">
+        <div className="absolute z-10 mt-1 max-h-60 w-full overflow-y-auto rounded-xl border border-[var(--border-color)] glass-card py-1 shadow-lg">
           {results.length > 0 ? (
             results.map((project) => (
               <button
                 key={project.id}
                 type="button"
                 onClick={() => handleSelect(project)}
-                className={`w-full px-4 py-2 text-left hover:bg-gray-100 ${
-                  value === project.id ? "bg-blue-50 font-medium text-blue-600" : "text-gray-700"
+                className={`w-full px-4 py-2 text-left hover:bg-[var(--bg-panel-hover)] ${
+                  value === project.id ? "bg-blue-50 font-medium text-blue-600" : "text-[var(--text-main)]"
                 }`}
               >
                 {project.name}
               </button>
             ))
           ) : (
-            <div className="px-4 py-3 text-sm text-gray-500">
+            <div className="px-4 py-3 text-sm text-[var(--text-muted)]">
               No projects found matching "{query}"
             </div>
           )}

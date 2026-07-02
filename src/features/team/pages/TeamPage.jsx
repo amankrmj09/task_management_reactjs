@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { fetchMembers } from "../redux/teamThunk";
-
+import { fetchMembers, deleteUser } from "../redux/teamThunk";
 import { addMember } from "../redux/teamSlice";
+import { fetchProjects } from "../../projects/redux/projectThunk";
 
 import TeamHeader from "../components/TeamHeader";
 import TeamList from "../components/TeamList";
 import InviteMemberModal from "../components/InviteMemberModal";
+import MemberDetailsDialog from "../components/MemberDetailsDialog";
 
 import { showErrorToast, showSuccessToast } from "../../../lib/toast";
 
@@ -17,9 +18,11 @@ function TeamPage() {
   const { members, isLoading, error } = useSelector((state) => state.team);
 
   const [isInviteOpen, setIsInviteOpen] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null);
 
   useEffect(() => {
     dispatch(fetchMembers());
+    dispatch(fetchProjects());
   }, [dispatch]);
 
   const handleInvite = (email) => {
@@ -45,18 +48,38 @@ function TeamPage() {
     setIsInviteOpen(false);
   };
 
+  const handleDelete = (memberId) => {
+    if (window.confirm("Are you sure you want to delete this member?")) {
+      dispatch(deleteUser(memberId));
+    }
+  };
+
   return (
     <div className="space-y-6">
       <TeamHeader onInvite={() => setIsInviteOpen(true)} />
 
       {error && <p className="text-sm text-red-500">{error}</p>}
 
-      {isLoading ? <p>Loading members...</p> : <TeamList members={members} />}
+      {isLoading ? (
+        <p>Loading members...</p>
+      ) : (
+        <TeamList 
+          members={members} 
+          onEdit={setSelectedMember} 
+          onDelete={handleDelete}
+        />
+      )}
 
       <InviteMemberModal
         isOpen={isInviteOpen}
         onClose={() => setIsInviteOpen(false)}
         onInvite={handleInvite}
+      />
+
+      <MemberDetailsDialog
+        member={selectedMember}
+        isOpen={!!selectedMember}
+        onClose={() => setSelectedMember(null)}
       />
     </div>
   );

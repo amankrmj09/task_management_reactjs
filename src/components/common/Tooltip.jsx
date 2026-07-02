@@ -13,7 +13,7 @@ function Tooltip({ content, position = "top", children }) {
       <span className="group inline-flex items-center">
         {children}
         <span
-          className={`pointer-events-none absolute z-20 whitespace-nowrap rounded-lg bg-gray-800 px-3 py-1 text-xs text-white opacity-0 transition group-hover:opacity-100 ${
+          className={`pointer-events-none absolute z-20 whitespace-nowrap rounded-lg bg-[var(--bg-panel-hover)] px-3 py-1 text-xs text-white opacity-0 transition group-hover:opacity-100 ${
             positionClasses[position] || positionClasses.top
           }`}
         >

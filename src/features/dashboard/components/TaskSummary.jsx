@@ -32,7 +32,7 @@ function TaskSummary({ summary }) {
     {
       label: "Todo",
       value: statusCounts.TODO,
-      styles: "bg-gray-100 text-gray-700",
+      styles: "bg-[var(--bg-panel-hover)] text-[var(--text-main)]",
     },
     {
       label: "In Progress",
@@ -52,8 +52,8 @@ function TaskSummary({ summary }) {
   ];
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-xl font-semibold text-gray-800">Task Summary</h2>
+    <div className="rounded-2xl glass-card p-6 shadow-sm">
+      <h2 className="mb-4 text-xl font-semibold text-[var(--text-main)]">Task Summary</h2>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {items.map((item) => (

@@ -22,16 +22,16 @@ function ProjectCard({ project }) {
   return (
     <Link
       to={`/projects/${project.id}`}
-      className="block rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
+      className="block rounded-2xl glass-card p-6 shadow-sm transition hover:shadow-md"
     >
         <div className="flex items-start justify-between">
           <div className="min-w-0 flex-1">
-            <h2 className="text-xl font-semibold text-gray-800">
+            <h2 className="text-xl font-semibold text-[var(--text-main)]">
               {project.name}
             </h2>
 
             {project.description && (
-              <p className="mt-2 text-sm text-gray-500 line-clamp-2">
+              <p className="mt-2 text-sm text-[var(--text-muted)] line-clamp-2">
                 {project.description}
               </p>
             )}
@@ -53,8 +53,8 @@ function ProjectCard({ project }) {
             </span>
 
             <div>
-              <p className="text-lg font-semibold text-gray-800">{memberCount}</p>
-              <p className="text-xs text-gray-500">Members</p>
+              <p className="text-lg font-semibold text-[var(--text-main)]">{memberCount}</p>
+              <p className="text-xs text-[var(--text-muted)]">Members</p>
             </div>
           </div>
 
@@ -67,8 +67,8 @@ function ProjectCard({ project }) {
             </span>
 
             <div>
-              <p className="text-lg font-semibold text-gray-800">{taskCount}</p>
-              <p className="text-xs text-gray-500">Tasks</p>
+              <p className="text-lg font-semibold text-[var(--text-main)]">{taskCount}</p>
+              <p className="text-xs text-[var(--text-muted)]">Tasks</p>
             </div>
           </div>
         </div>

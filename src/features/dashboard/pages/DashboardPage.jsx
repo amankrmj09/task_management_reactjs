@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchAdminDashboard, fetchMyDashboard } from "../redux/dashboardThunk";
 
+import DashboardHeader from "../components/DashboardHeader";
 import DashboardStats from "../components/DashboardStats";
 import TaskSummary from "../components/TaskSummary";
 import RecentTasks from "../components/RecentTasks";
@@ -25,6 +26,7 @@ function DashboardPage() {
 
   return (
     <div className="space-y-6">
+      <DashboardHeader />
       <DashboardStats />
 
       <TaskSummary />

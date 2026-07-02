@@ -14,7 +14,7 @@ function ConfirmDialog({
       onClose={onClose}
       title={title}
     >
-      <p className="text-gray-600">
+      <p className="text-[var(--text-muted)]">
         {description}
       </p>
 

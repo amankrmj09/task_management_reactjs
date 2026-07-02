@@ -1,37 +1,56 @@
+import { useEffect } from "react";
+
 function Modal({
   isOpen,
   onClose,
   title,
   children,
 }) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm"
-      onClick={onClose}
-    >
-      {/* Outer shell: clips scrollbar inside rounded corners */}
-      <div
-        className="w-full max-w-lg overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Inner scroll area */}
-        <div className="max-h-[85vh] overflow-y-auto p-6">
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold text-gray-800">
-              {title}
-            </h2>
+    <div className="relative z-50">
+      {/* Backdrop */}
+      <div 
+        className="fixed inset-0 bg-[var(--bg-panel-hover)]/60 backdrop-blur-sm transition-opacity" 
+        onClick={onClose}
+      />
 
-            <button
-              onClick={onClose}
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xl text-gray-400 transition hover:bg-gray-100 hover:text-gray-600"
-            >
-              ×
-            </button>
+      {/* Full-screen scrollable container */}
+      <div className="fixed inset-0 z-10 overflow-y-auto" onClick={onClose}>
+        {/* Center the modal */}
+        <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+          {/* Modal Panel */}
+          <div
+            className="relative transform overflow-hidden rounded-2xl border border-[var(--border-color)] bg-[var(--bg-panel)] glass-card shadow-2xl transition-all sm:my-8 w-full max-w-lg text-left"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6">
+              <div className="mb-5 flex items-center justify-between">
+                <h2 className="text-2xl font-semibold text-[var(--text-main)]">
+                  {title}
+                </h2>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-xl text-[var(--text-muted)] transition hover:bg-[var(--bg-panel-hover)] hover:text-[var(--text-muted)]"
+                >
+                  ×
+                </button>
+              </div>
+
+              {children}
+            </div>
           </div>
-
-          {children}
         </div>
       </div>
     </div>

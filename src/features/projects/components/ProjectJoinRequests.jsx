@@ -75,13 +75,13 @@ function ProjectJoinRequests({ projectId, onMemberAdded }) {
         {requests.map((request) => (
           <div
             key={request.id}
-            className="flex items-center justify-between rounded-xl bg-white p-4 shadow-sm"
+            className="flex items-center justify-between rounded-xl glass-card p-4 shadow-sm"
           >
             <div>
-              <p className="font-semibold text-gray-800">
+              <p className="font-semibold text-[var(--text-main)]">
                 {request.user?.name || "Unknown User"}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-[var(--text-muted)]">
                 {request.user?.email}
               </p>
             </div>

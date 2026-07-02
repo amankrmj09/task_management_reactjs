@@ -8,34 +8,34 @@ function RecentTasks() {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "TODO": return "bg-gray-100 text-gray-700";
+      case "TODO": return "bg-[var(--bg-panel-hover)] text-[var(--text-main)]";
       case "IN_PROGRESS": return "bg-blue-100 text-blue-700";
       case "IN_REVIEW": return "bg-purple-100 text-purple-700";
       case "DONE": return "bg-green-100 text-green-700";
-      default: return "bg-gray-100 text-gray-700";
+      default: return "bg-[var(--bg-panel-hover)] text-[var(--text-main)]";
     }
   };
 
   const getPriorityColor = (priority) => {
     switch (priority) {
-      case "LOW": return "bg-gray-100 text-gray-700";
+      case "LOW": return "bg-[var(--bg-panel-hover)] text-[var(--text-main)]";
       case "MEDIUM": return "bg-yellow-100 text-yellow-700";
       case "HIGH": return "bg-orange-100 text-orange-700";
       case "URGENT": return "bg-red-100 text-red-700";
-      default: return "bg-gray-100 text-gray-700";
+      default: return "bg-[var(--bg-panel-hover)] text-[var(--text-main)]";
     }
   };
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm">
-      <h2 className="mb-4 text-xl font-semibold text-gray-800">Recent Tasks</h2>
+    <div className="rounded-2xl glass-card p-6 shadow-sm">
+      <h2 className="mb-4 text-xl font-semibold text-[var(--text-main)]">Recent Tasks</h2>
 
       <div className="space-y-4">
         {recentTasks.length > 0 ? (
           recentTasks.slice(0, 2).map((task) => (
-            <Link key={task.id} to={`/tasks/${task.id}`} className="group flex items-center justify-between rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md hover:border-gray-200">
+            <Link key={task.id} to={`/tasks/${task.id}`} className="group flex items-center justify-between rounded-xl border border-[var(--border-color)] glass-card p-4 shadow-sm transition hover:shadow-md hover:border-[var(--border-color)]">
               <div>
-                <h3 className="font-medium text-gray-800 transition-colors group-hover:text-blue-600">{task.title}</h3>
+                <h3 className="font-medium text-[var(--text-main)] transition-colors group-hover:text-blue-600">{task.title}</h3>
                 <div className="mt-2 flex gap-2">
                   <span className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold tracking-wide uppercase ${getStatusColor(task.status)}`}>
                     {task.status.replace("_", " ")}
@@ -53,7 +53,7 @@ function RecentTasks() {
             </Link>
           ))
         ) : (
-          <p className="text-gray-500">No recent tasks</p>
+          <p className="text-[var(--text-muted)]">No recent tasks</p>
         )}
       </div>
     </div>

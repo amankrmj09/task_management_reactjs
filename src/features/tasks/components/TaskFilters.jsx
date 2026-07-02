@@ -27,13 +27,13 @@ function TaskFilters() {
   };
 
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm">
+    <div className="rounded-2xl glass-card p-6 shadow-sm">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <select
           name="status"
           value={filters.status}
           onChange={handleChange}
-          className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+          className="rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
         >
           <option value="">
             All Status
@@ -60,7 +60,7 @@ function TaskFilters() {
           name="priority"
           value={filters.priority}
           onChange={handleChange}
-          className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+          className="rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
         >
           <option value="">
             All Priority
@@ -87,7 +87,7 @@ function TaskFilters() {
           name="overdue"
           value={filters.overdue}
           onChange={handleChange}
-          className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-blue-500"
+          className="rounded-xl border border-[var(--border-color)] px-4 py-3 outline-none focus:border-[var(--color-primary)]"
         >
           <option value="">
             Overdue
@@ -104,7 +104,7 @@ function TaskFilters() {
 
         <button
           onClick={handleReset}
-          className="rounded-xl bg-gray-800 px-5 py-3 font-medium text-white transition hover:bg-gray-900"
+          className="rounded-xl bg-[var(--bg-panel-hover)] px-5 py-3 font-medium text-white transition hover:bg-[var(--bg-panel-hover)]"
         >
           Reset Filters
         </button>

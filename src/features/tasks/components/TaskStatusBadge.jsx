@@ -1,14 +1,9 @@
 function TaskStatusBadge({ status }) {
   const styles = {
-    TODO: "bg-gray-100 text-gray-700",
-
-    IN_PROGRESS:
-      "bg-yellow-100 text-yellow-700",
-
-    IN_REVIEW:
-      "bg-blue-100 text-blue-700",
-
-    DONE: "bg-green-100 text-green-700",
+    TODO: "bg-[var(--bg-panel-hover)] text-[var(--text-main)]",
+    IN_PROGRESS: "bg-yellow-100 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-400",
+    IN_REVIEW: "bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400",
+    DONE: "bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-400",
   };
 
   return (

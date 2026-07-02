@@ -76,14 +76,14 @@ function ProfileForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl bg-white p-6 shadow-sm"
+      className="space-y-5 rounded-2xl glass-card p-6 shadow-sm"
     >
       <div>
-        <h2 className="text-2xl font-semibold text-gray-800">
+        <h2 className="text-2xl font-semibold text-[var(--text-main)]">
           Profile Information
         </h2>
 
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-[var(--text-muted)]">
           Update your account profile
         </p>
       </div>

@@ -1,20 +1,19 @@
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
+import { Toaster } from "sonner";
 
 import { store } from "./store";
+import { ThemeProvider } from "./ThemeContext";
 
 function Providers({ children }) {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        {children}
-
-        <Toaster
-          position="top-right"
-          reverseOrder={false}
-        />
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          {children}
+          <Toaster position="top-right" richColors />
+        </BrowserRouter>
+      </ThemeProvider>
     </Provider>
   );
 }

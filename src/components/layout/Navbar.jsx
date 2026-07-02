@@ -7,7 +7,7 @@ function Navbar({
   className = "",
 }) {
   return (
-    <header className={`border-b bg-white ${className}`}>
+    <header className={`border-b glass-card ${className}`}>
       <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
         <div className="text-xl font-bold text-blue-600">{brand}</div>
 
@@ -21,7 +21,7 @@ function Navbar({
                   `text-sm font-medium transition ${
                     isActive
                       ? "text-blue-600"
-                      : "text-gray-600 hover:text-gray-900"
+                      : "text-[var(--text-muted)] hover:text-[var(--text-main)]"
                   }`
                 }
               >

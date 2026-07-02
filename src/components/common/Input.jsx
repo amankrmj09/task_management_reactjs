@@ -10,7 +10,7 @@ function Input({
   return (
     <div className="space-y-2">
       {label && (
-        <label className="text-sm font-medium text-gray-700">
+        <label className="text-sm font-medium text-[var(--text-main)]">
           {label}
         </label>
       )}
@@ -20,10 +20,10 @@ function Input({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        className={`w-full rounded-xl border px-4 py-3 outline-none transition focus:border-blue-500 ${
+        className={`w-full rounded-xl border px-4 py-3 outline-none transition focus:border-[var(--color-primary)] ${
           error
             ? "border-red-500"
-            : "border-gray-300"
+            : "border-[var(--border-color)]"
         }`}
         {...props}
       />

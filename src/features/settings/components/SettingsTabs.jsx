@@ -37,7 +37,7 @@ function SettingsTabs({ tabs }) {
             className={`rounded-xl px-4 py-2 text-sm font-medium transition ${
               activeTab === tab.id
                 ? "bg-blue-600 text-white"
-                : "border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
+                : "border border-[var(--border-color)] glass-card text-[var(--text-main)] hover:bg-[var(--bg-panel-hover)]"
             }`}
           >
             {tab.label}

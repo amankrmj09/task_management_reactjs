@@ -59,7 +59,7 @@ function UpdateProjectForm({ project, onSuccess }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="space-y-5 rounded-2xl bg-white p-6 shadow-sm"
+      className="space-y-5 rounded-2xl glass-card p-6 shadow-sm"
     >
       <Input
         label="Project Name"
@@ -78,7 +78,7 @@ function UpdateProjectForm({ project, onSuccess }) {
       />
 
       <div className="space-y-2">
-        <label className="text-sm font-medium text-gray-700">Status</label>
+        <label className="text-sm font-medium text-[var(--text-main)]">Status</label>
 
         <Dropdown
           label={formData.status}

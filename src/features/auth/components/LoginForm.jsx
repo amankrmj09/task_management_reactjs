@@ -2,19 +2,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Mail, Lock, Loader2 } from "lucide-react";
 
-import Input from "../../../components/common/Input";
-import Button from "../../../components/common/Button";
+import { Input } from "../../../components/ui/Input";
 
 import { loginSchema } from "../utils/authValidation";
-
 import { useAuth } from "../hooks/useAuth";
-
 import { ROUTES } from "../../../routes/routeConstants";
 
 function LoginForm() {
   const navigate = useNavigate();
-
   const { login, isLoading, error, isAuthenticated } = useAuth();
 
   const {
@@ -36,11 +33,12 @@ function LoginForm() {
   }, [isAuthenticated, navigate]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
       <Input
         label="Email"
         type="email"
         placeholder="Enter your email"
+        icon={Mail}
         error={errors.email?.message}
         {...register("email")}
       />
@@ -49,32 +47,38 @@ function LoginForm() {
         label="Password"
         type="password"
         placeholder="Enter your password"
+        icon={Lock}
         error={errors.password?.message}
         {...register("password")}
       />
 
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-0.5">
         <Link
           to={ROUTES.FORGOT_PASSWORD}
-          className="text-sm font-medium text-blue-600 hover:underline"
+          className="text-[10px] uppercase font-bold tracking-wider text-[var(--color-primary)] hover:opacity-80 transition-opacity"
         >
           Forgot password?
         </Link>
       </div>
 
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && <p className="text-xs font-semibold text-[var(--color-danger)] text-center">{error}</p>}
 
-      <Button type="submit" disabled={isLoading} className="w-full">
-        {isLoading ? "Logging in..." : "Login"}
-      </Button>
+      <button 
+        type="submit" 
+        disabled={isLoading} 
+        className="w-full flex items-center justify-center gap-2 bg-[var(--color-primary)] text-white text-sm font-semibold p-2.5 rounded-full transition-all duration-300 hover:opacity-90 hover:-translate-y-0.5 hover:shadow-md disabled:opacity-70 disabled:cursor-not-allowed disabled:transform-none mt-1"
+      >
+        {isLoading && <Loader2 size={16} className="animate-spin" />}
+        {isLoading ? "Authenticating..." : "Login"}
+      </button>
 
-      <p className="text-center text-sm text-gray-500">
+      <p className="text-center text-xs font-medium text-[var(--text-muted)] pt-1">
         Don&apos;t have an account?{" "}
         <Link
           to={ROUTES.SIGNUP}
-          className="font-medium text-blue-600 hover:underline"
+          className="text-[var(--color-primary)] font-bold hover:underline underline-offset-4"
         >
-          Signup
+          Create one now
         </Link>
       </p>
     </form>

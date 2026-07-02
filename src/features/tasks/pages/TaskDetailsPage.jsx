@@ -115,10 +115,13 @@ function TaskDetailsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Task Details</h1>
-          <p className="mt-1 text-gray-500">Review and update task progress</p>
+          <h1 className="text-2xl font-bold text-[var(--text-main)] flex items-center gap-2 leading-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-primary)] shrink-0"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+            Task Details
+          </h1>
+          <p className="text-[var(--text-muted)] text-sm mt-1">Review and update task progress</p>
         </div>
 
         <div className="flex items-center gap-3">
@@ -144,8 +147,8 @@ function TaskDetailsPage() {
       <TaskDetails task={selectedTask} />
 
       {/* Status Pipeline */}
-      <div className="rounded-2xl bg-white p-6 shadow-sm">
-        <h2 className="mb-4 text-lg font-semibold text-gray-800">
+      <div className="rounded-2xl glass-card p-6 shadow-sm">
+        <h2 className="mb-4 text-lg font-semibold text-[var(--text-main)]">
           Status
         </h2>
 
@@ -163,7 +166,7 @@ function TaskDetailsPage() {
                 {index > 0 && (
                   <div
                     className={`hidden h-0.5 w-6 sm:block ${
-                      isPast || isCurrent ? "bg-green-400" : "bg-gray-200"
+                      isPast || isCurrent ? "bg-green-400" : "bg-[var(--bg-panel-hover)]"
                     }`}
                   />
                 )}
@@ -199,13 +202,13 @@ function TaskDetailsPage() {
         </div>
 
         {statusLoading && (
-          <p className="mt-3 text-sm text-gray-500">Updating status...</p>
+          <p className="mt-3 text-sm text-[var(--text-muted)]">Updating status...</p>
         )}
       </div>
 
       {/* Comments */}
-      <div className="rounded-2xl bg-white p-6 shadow-sm">
-        <h2 className="mb-5 text-2xl font-semibold text-gray-800">Comments</h2>
+      <div className="rounded-2xl glass-card p-6 shadow-sm">
+        <h2 className="mb-5 text-2xl font-semibold text-[var(--text-main)]">Comments</h2>
 
         <div className="space-y-4">
           {selectedTask.comments?.length > 0 ? (
@@ -220,12 +223,12 @@ function TaskDetailsPage() {
                         "?"}
                     </div>
 
-                    <h3 className="font-semibold text-gray-800">
+                    <h3 className="font-semibold text-[var(--text-main)]">
                       {c.authorName || c.user?.name || c.author?.name || "Unknown"}
                     </h3>
                   </div>
 
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-[var(--text-muted)]">
                     {c.createdAt
                       ? new Date(c.createdAt).toLocaleDateString("en-US", {
                           month: "short",
@@ -237,11 +240,11 @@ function TaskDetailsPage() {
                   </p>
                 </div>
 
-                <p className="mt-3 text-gray-700">{c.content || c.text}</p>
+                <p className="mt-3 text-[var(--text-main)]">{c.content || c.text}</p>
               </div>
             ))
           ) : (
-            <p className="text-gray-500">No comments yet</p>
+            <p className="text-[var(--text-muted)]">No comments yet</p>
           )}
         </div>
 
@@ -250,7 +253,7 @@ function TaskDetailsPage() {
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Write a comment..."
-            className="min-h-[120px] w-full rounded-xl border border-gray-300 p-4 outline-none focus:border-blue-500"
+            className="min-h-[120px] w-full rounded-xl border border-[var(--border-color)] p-4 outline-none focus:border-[var(--color-primary)]"
           />
 
           <button

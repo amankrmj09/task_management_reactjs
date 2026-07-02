@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const PRIORITY_COLORS = {
-  LOW: "bg-gray-100 text-gray-600",
+  LOW: "bg-[var(--bg-panel-hover)] text-[var(--text-muted)]",
   MEDIUM: "bg-blue-100 text-blue-700",
   HIGH: "bg-orange-100 text-orange-700",
   CRITICAL: "bg-red-100 text-red-700",
@@ -18,16 +18,16 @@ function TaskCard({ task }) {
   return (
     <Link
       to={`/tasks/${task.id}`}
-      className="block rounded-2xl bg-white p-6 shadow-sm transition hover:shadow-md"
+      className="block rounded-2xl glass-card p-6 shadow-sm transition hover:shadow-md"
     >
         <div className="flex items-start justify-between">
           <div className="min-w-0 flex-1">
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font-semibold text-[var(--text-main)]">
               {task.title}
             </h2>
 
             {task.description && (
-              <p className="mt-1 text-sm text-gray-500 line-clamp-2">
+              <p className="mt-1 text-sm text-[var(--text-muted)] line-clamp-2">
                 {task.description}
               </p>
             )}
@@ -52,7 +52,7 @@ function TaskCard({ task }) {
           </span>
 
           {task.dueDate && (
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-[var(--text-muted)]">
               Due:{" "}
               {new Date(task.dueDate).toLocaleDateString("en-US", {
                 month: "short",
@@ -62,7 +62,7 @@ function TaskCard({ task }) {
             </span>
           )}
 
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-[var(--text-muted)]">
             {task.assignee?.name || "Unassigned"}
           </span>
         </div>
