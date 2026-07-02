@@ -10,7 +10,12 @@ A modern, responsive, and dynamic user interface built with **React** and **Vite
 
 <br />
 
-### **[🚀 View Live Demo](https://task-management-reactjs-99o7.onrender.com/)**
+### **[🚀 View Live Demo](https://taskmanager.blubug.me/)**
+
+**Demo Admin Credentials:**
+- **Email:** `admin@example.com`
+- **Password:** `AdminPass123!`
+> *You can also create your own user account to test the platform.*
 
 </div>
 
