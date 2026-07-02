@@ -14,7 +14,7 @@ function TaskFilters() {
   const hasActiveFilters = Boolean(filters.status || filters.priority || filters.overdue);
 
   return (
-    <div className="relative z-50 rounded-2xl glass-card p-6 shadow-sm border border-[var(--border-color)]">
+    <div className="relative z-40 rounded-2xl glass-card p-6 shadow-sm border border-[var(--border-color)]">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
         <Dropdown
           fullWidth

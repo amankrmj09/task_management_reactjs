@@ -12,6 +12,7 @@ import PaginationControls from "../../../components/common/PaginationControls";
 
 import ProjectHeader from "../components/ProjectHeader";
 import ProjectList from "../components/ProjectList";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import CreateProjectForm from "../components/CreateProjectForm";
 import ProjectSearchDropdown from "../components/ProjectSearchDropdown";
 
@@ -32,13 +33,17 @@ function ProjectsPage() {
   const [isJoinOpen, setIsJoinOpen] = useState(false);
   const [joinProjectId, setJoinProjectId] = useState("");
   const [joinLoading, setJoinLoading] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
 
   useEffect(() => {
     dispatch(fetchProjects());
   }, [dispatch]);
 
-  const handleDeleteProject = async (projectId) => {
-    await dispatch(deleteProject(projectId));
+  const handleDeleteProject = async () => {
+    if (projectToDelete) {
+      await dispatch(deleteProject(projectToDelete.id));
+      setProjectToDelete(null);
+    }
   };
 
   const handleJoinRequest = async (e) => {
@@ -95,7 +100,13 @@ function ProjectsPage() {
         <p>Loading projects...</p>
       ) : (
         <div className="space-y-4">
-          <ProjectList projects={projects} />
+          <ProjectList 
+            projects={projects} 
+            onDeleteProject={(id) => {
+              const project = projects.find(p => p.id === id);
+              if (project) setProjectToDelete(project);
+            }} 
+          />
           <div className="flex justify-end mt-4">
             <PaginationControls
               pageNumber={pagination?.page || 0}
@@ -142,6 +153,14 @@ function ProjectsPage() {
           </Button>
         </form>
       </Modal>
+
+      <ConfirmDialog
+        isOpen={!!projectToDelete}
+        onClose={() => setProjectToDelete(null)}
+        title="Delete Project"
+        message={`Are you sure you want to delete "${projectToDelete?.name}"? This action cannot be undone.`}
+        onConfirm={handleDeleteProject}
+      />
     </div>
   );
 }

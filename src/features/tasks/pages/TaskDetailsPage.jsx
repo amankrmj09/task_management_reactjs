@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
+import { Loader2, Check } from "lucide-react";
 
 import {
   addTaskComment,
@@ -16,6 +17,7 @@ import Modal from "../../../components/common/Modal";
 import TaskDetails from "../components/TaskDetails";
 import UpdateTaskForm from "../components/UpdateTaskForm";
 import AssignTaskModal from "../components/AssignTaskModal";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 
 const STATUS_FLOW = ["TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"];
 
@@ -56,7 +58,9 @@ function TaskDetailsPage() {
   const [comment, setComment] = useState("");
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isAssignOpen, setIsAssignOpen] = useState(false);
-  const [statusLoading, setStatusLoading] = useState(false);
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+  const [loadingStatus, setLoadingStatus] = useState(null);
+  const [successStatus, setSuccessStatus] = useState(null);
 
   const { selectedTask, isLoading } = useSelector((state) => state.tasks);
 
@@ -75,10 +79,15 @@ function TaskDetailsPage() {
   const handleStatusChange = async (status) => {
     if (!selectedProject?.id || !taskId) return;
 
-    setStatusLoading(true);
-    await dispatch(updateTaskStatus(selectedProject.id, taskId, status));
-    await dispatch(fetchTask(selectedProject.id, taskId));
-    setStatusLoading(false);
+    setLoadingStatus(status);
+    try {
+      await dispatch(updateTaskStatus(selectedProject.id, taskId, status));
+      setSuccessStatus(status);
+      await dispatch(fetchTask(selectedProject.id, taskId));
+      setTimeout(() => setSuccessStatus(null), 1000);
+    } finally {
+      setLoadingStatus(null);
+    }
   };
 
   const handleAddComment = async () => {
@@ -131,12 +140,7 @@ function TaskDetailsPage() {
           <Button onClick={() => setIsEditOpen(true)}>Edit Task</Button>
           <button
             type="button"
-            onClick={async () => {
-              if (!window.confirm(`Delete "${selectedTask.title}"? This cannot be undone.`)) return;
-              if (!selectedProject?.id) return;
-              await dispatch(deleteTask(selectedProject.id, taskId));
-              navigate("/tasks");
-            }}
+            onClick={() => setIsDeleteConfirmOpen(true)}
             className="rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100"
           >
             Delete
@@ -159,24 +163,28 @@ function TaskDetailsPage() {
             const isNext = index === currentStatusIndex + 1;
             const isPrev = index === currentStatusIndex - 1;
             const isPast = index < currentStatusIndex;
-            const canClick = (isNext || isPrev) && !statusLoading;
+            const isLoadingThis = loadingStatus === status;
+            const isSuccessThis = successStatus === status;
+            const canClick = (isNext || isPrev) && !loadingStatus;
 
             return (
               <div key={status} className="flex items-center gap-2">
                 {index > 0 && (
                   <div
                     className={`hidden h-0.5 w-6 sm:block ${
-                      isPast || isCurrent ? "bg-green-400" : "bg-[var(--bg-panel-hover)]"
+                      isPast || isCurrent || isSuccessThis ? "bg-green-400" : "bg-[var(--bg-panel-hover)]"
                     }`}
                   />
                 )}
 
                 <button
                   type="button"
-                  disabled={!canClick}
+                  disabled={!canClick && !isLoadingThis}
                   onClick={() => canClick && handleStatusChange(status)}
-                  className={`rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition ${
-                    isCurrent
+                  className={`rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition flex items-center ${
+                    isSuccessThis
+                      ? "bg-green-500 scale-105"
+                      : isCurrent
                       ? config.activeColor + " scale-105"
                       : isPast
                       ? "bg-green-400"
@@ -193,17 +201,19 @@ function TaskDetailsPage() {
                       : `Cannot jump to ${config.label}`
                   }
                 >
-                  <span className="mr-1.5">{config.icon}</span>
+                  {isLoadingThis ? (
+                    <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
+                  ) : isSuccessThis ? (
+                    <Check className="mr-1.5 h-4 w-4" />
+                  ) : (
+                    <span className="mr-1.5">{config.icon}</span>
+                  )}
                   {config.label}
                 </button>
               </div>
             );
           })}
         </div>
-
-        {statusLoading && (
-          <p className="mt-3 text-sm text-[var(--text-muted)]">Updating status...</p>
-        )}
       </div>
 
       {/* Comments */}
@@ -286,6 +296,18 @@ function TaskDetailsPage() {
         onClose={() => setIsAssignOpen(false)}
         members={selectedProject?.members || []}
         onAssign={handleAssign}
+      />
+
+      <ConfirmDialog
+        isOpen={isDeleteConfirmOpen}
+        onClose={() => setIsDeleteConfirmOpen(false)}
+        title="Delete Task"
+        message={`Are you sure you want to delete "${selectedTask?.title}"? This action cannot be undone.`}
+        onConfirm={async () => {
+          if (!selectedProject?.id) return;
+          await dispatch(deleteTask(selectedProject.id, taskId));
+          navigate("/tasks");
+        }}
       />
     </div>
   );

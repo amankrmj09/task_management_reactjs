@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Input from "../../../components/common/Input";
 import TextArea from "../../../components/common/TextArea";
 import Button from "../../../components/common/Button";
+import Dropdown from "../../../components/common/Dropdown";
 
 import { createTask } from "../redux/taskThunk";
 
@@ -101,20 +102,17 @@ function TaskForm({ onSuccess }) {
         <div className="space-y-2">
           <label className="text-sm font-medium text-[var(--text-main)]">Priority</label>
 
-          <select
-            name="priority"
-            value={formData.priority}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] text-[var(--text-main)] px-4 py-3 outline-none transition focus:border-[var(--color-primary)]"
-          >
-            <option value="LOW">LOW</option>
-
-            <option value="MEDIUM">MEDIUM</option>
-
-            <option value="HIGH">HIGH</option>
-
-            <option value="CRITICAL">CRITICAL</option>
-          </select>
+          <Dropdown
+            fullWidth
+            label={formData.priority}
+            onSelect={(val) => handleChange({ target: { name: "priority", value: val } })}
+            items={[
+              { label: "LOW", value: "LOW" },
+              { label: "MEDIUM", value: "MEDIUM" },
+              { label: "HIGH", value: "HIGH" },
+              { label: "CRITICAL", value: "CRITICAL" },
+            ]}
+          />
         </div>
 
         <Input

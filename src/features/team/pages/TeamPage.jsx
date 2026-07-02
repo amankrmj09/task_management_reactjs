@@ -9,6 +9,7 @@ import TeamHeader from "../components/TeamHeader";
 import TeamList from "../components/TeamList";
 import InviteMemberModal from "../components/InviteMemberModal";
 import MemberDetailsDialog from "../components/MemberDetailsDialog";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 
 import PaginationControls from "../../../components/common/PaginationControls";
 
@@ -21,6 +22,7 @@ function TeamPage() {
 
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [memberToDelete, setMemberToDelete] = useState(null);
 
   useEffect(() => {
     dispatch(fetchMembers(0, 10));
@@ -51,9 +53,7 @@ function TeamPage() {
   };
 
   const handleDelete = (memberId) => {
-    if (window.confirm("Are you sure you want to delete this member?")) {
-      dispatch(deleteUser(memberId));
-    }
+    setMemberToDelete(memberId);
   };
 
   return (
@@ -93,6 +93,16 @@ function TeamPage() {
         member={selectedMember}
         isOpen={!!selectedMember}
         onClose={() => setSelectedMember(null)}
+      />
+
+      <ConfirmDialog
+        isOpen={!!memberToDelete}
+        onClose={() => setMemberToDelete(null)}
+        title="Delete Member"
+        message="Are you sure you want to delete this member? This action cannot be undone."
+        onConfirm={() => {
+          if (memberToDelete) dispatch(deleteUser(memberToDelete));
+        }}
       />
     </div>
   );

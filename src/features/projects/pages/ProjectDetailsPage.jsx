@@ -12,6 +12,7 @@ import Modal from "../../../components/common/Modal";
 import ProjectDetails from "../components/ProjectDetails";
 import UpdateProjectForm from "../components/UpdateProjectForm";
 import AddMemberModal from "../components/AddMemberModal";
+import { ConfirmDialog } from "../../../components/ui/ConfirmDialog";
 import TaskForm from "../../tasks/components/TaskForm";
 import ProjectJoinRequests from "../components/ProjectJoinRequests";
 
@@ -43,6 +44,8 @@ function ProjectDetailsPage() {
   const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
 
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
+
+  const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   const handleRemoveMember = async (email) => {
     try {
@@ -81,11 +84,7 @@ function ProjectDetailsPage() {
       {admin && (
         <button
           type="button"
-          onClick={async () => {
-            if (!window.confirm(`Delete "${selectedProject.name}"? This cannot be undone.`)) return;
-            await dispatch(deleteProject(projectId));
-            navigate("/projects");
-          }}
+          onClick={() => setIsDeleteConfirmOpen(true)}
           className="rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100"
         >
           Delete
@@ -149,6 +148,17 @@ function ProjectDetailsPage() {
           }}
         />
       </Modal>
+
+      <ConfirmDialog
+        isOpen={isDeleteConfirmOpen}
+        onClose={() => setIsDeleteConfirmOpen(false)}
+        title="Delete Project"
+        message={`Are you sure you want to delete "${selectedProject?.name}"? This action cannot be undone.`}
+        onConfirm={async () => {
+          await dispatch(deleteProject(projectId));
+          navigate("/projects");
+        }}
+      />
     </div>
   );
 }

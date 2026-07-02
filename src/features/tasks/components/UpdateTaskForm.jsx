@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Input from "../../../components/common/Input";
 import TextArea from "../../../components/common/TextArea";
 import Button from "../../../components/common/Button";
+import Dropdown from "../../../components/common/Dropdown";
 
 import { editTask, updateTaskStatus } from "../redux/taskThunk";
 
@@ -119,34 +120,28 @@ function UpdateTaskForm({ task, onSuccess }) {
       <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         <div className="space-y-2">
           <label className="text-sm font-medium text-[var(--text-main)]">Status</label>
-          <select
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] text-[var(--text-main)] px-4 py-3 outline-none transition focus:border-[var(--color-primary)]"
-          >
-            {Object.values(TASK_STATUS).map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
+          <Dropdown
+            fullWidth
+            label={formData.status}
+            onSelect={(val) => handleChange({ target: { name: "status", value: val } })}
+            items={Object.values(TASK_STATUS).map((status) => ({
+              label: status,
+              value: status,
+            }))}
+          />
         </div>
 
         <div className="space-y-2">
           <label className="text-sm font-medium text-[var(--text-main)]">Priority</label>
-          <select
-            name="priority"
-            value={formData.priority}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-[var(--border-color)] bg-[var(--bg-panel)] text-[var(--text-main)] px-4 py-3 outline-none transition focus:border-[var(--color-primary)]"
-          >
-            {Object.values(TASK_PRIORITY).map((priority) => (
-              <option key={priority} value={priority}>
-                {priority}
-              </option>
-            ))}
-          </select>
+          <Dropdown
+            fullWidth
+            label={formData.priority}
+            onSelect={(val) => handleChange({ target: { name: "priority", value: val } })}
+            items={Object.values(TASK_PRIORITY).map((priority) => ({
+              label: priority,
+              value: priority,
+            }))}
+          />
         </div>
       </div>
 
