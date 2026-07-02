@@ -1,9 +1,13 @@
 import axios from "axios";
 
+const getBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_BASE_URL || "";
+  const cleanUrl = envUrl.endsWith("/") ? envUrl.slice(0, -1) : envUrl;
+  return `${cleanUrl}/api`;
+};
+
 const axiosInstance = axios.create({
-  baseURL:
-    import.meta.env.VITE_API_BASE_URL ||
-    "http://localhost:8080/api",
+  baseURL: getBaseUrl(),
 
   headers: {
     "Content-Type": "application/json",
@@ -64,9 +68,7 @@ axiosInstance.interceptors.response.use(
         }
 
         const response = await axios.post(
-          `${
-            import.meta.env.VITE_API_BASE_URL
-          }/auth/refresh`,
+          `${getBaseUrl()}/auth/refresh`,
           {
             refreshToken,
           }
