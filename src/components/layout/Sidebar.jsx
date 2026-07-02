@@ -102,6 +102,8 @@ export const Sidebar = ({ isOpen, setIsOpen }) => {
           <button 
             onClick={() => {
               localStorage.removeItem('token');
+              localStorage.removeItem('refreshToken');
+              localStorage.removeItem('user');
               window.location.href = '/login';
             }}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl w-full text-[var(--color-danger)] hover:bg-[var(--color-danger)]/10 transition-colors cursor-pointer"

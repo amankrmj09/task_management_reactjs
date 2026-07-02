@@ -13,10 +13,10 @@ function DashboardLayout({ children }) {
   );
 
   useEffect(() => {
-    if (token && !user) {
+    if (token) {
       dispatch(fetchCurrentUser());
     }
-  }, [dispatch, token, user]);
+  }, [dispatch, token]);
 
   return (
     <div className="flex h-screen overflow-hidden gap-2 bg-[var(--bg-panel-hover)] p-2">
