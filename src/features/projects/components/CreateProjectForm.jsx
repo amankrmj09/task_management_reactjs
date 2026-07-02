@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import Input from "../../../components/common/Input";
 import TextArea from "../../../components/common/TextArea";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
 
 import { createProject } from "../redux/projectThunk";
 
@@ -31,7 +31,7 @@ function CreateProjectForm({ onSuccess }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     const result = await dispatch(createProject(formData));
@@ -40,7 +40,7 @@ function CreateProjectForm({ onSuccess }) {
       onSuccess?.();
       navigate(ROUTES.PROJECTS);
     }
-  };
+  }, [dispatch, formData, onSuccess, navigate]);
 
   return (
     <form
@@ -67,9 +67,14 @@ function CreateProjectForm({ onSuccess }) {
         <p className="text-sm text-red-500">{error}</p>
       )}
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Creating..." : "Create Project"}
-      </Button>
+      <div className="flex justify-end mt-4">
+        <ActionButton
+          type="submit"
+          text={isLoading ? "Creating..." : "Create Project"}
+          className="w-max px-8 h-[48px]"
+          disabled={isLoading}
+        />
+      </div>
     </form>
   );
 }

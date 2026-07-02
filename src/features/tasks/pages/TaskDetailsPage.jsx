@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 import { Loader2, Check } from "lucide-react";
@@ -11,7 +11,8 @@ import {
   deleteTask,
 } from "../redux/taskThunk";
 
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
+import { UserPlus, Edit, Trash2 } from "lucide-react";
 import Modal from "../../../components/common/Modal";
 
 import TaskDetails from "../components/TaskDetails";
@@ -61,6 +62,10 @@ function TaskDetailsPage() {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(null);
   const [successStatus, setSuccessStatus] = useState(null);
+
+  const handleOpenAssign = useCallback(() => setIsAssignOpen(true), []);
+  const handleOpenEdit = useCallback(() => setIsEditOpen(true), []);
+  const handleOpenDelete = useCallback(() => setIsDeleteConfirmOpen(true), []);
 
   const { selectedTask, isLoading } = useSelector((state) => state.tasks);
 
@@ -124,7 +129,7 @@ function TaskDetailsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-stretch justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[var(--text-main)] flex items-center gap-2 leading-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[var(--color-primary)] shrink-0"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
@@ -133,18 +138,35 @@ function TaskDetailsPage() {
           <p className="text-[var(--text-muted)] text-sm mt-1">Review and update task progress</p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Button variant="secondary" onClick={() => setIsAssignOpen(true)}>
-            Assign Task
-          </Button>
-          <Button onClick={() => setIsEditOpen(true)}>Edit Task</Button>
-          <button
-            type="button"
-            onClick={() => setIsDeleteConfirmOpen(true)}
-            className="rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100"
-          >
-            Delete
-          </button>
+        <div className="flex items-stretch gap-3">
+          <ActionButton
+            text="Assign Task"
+            icon={UserPlus}
+            bgClass="bg-[var(--bg-panel-hover)]"
+            textClass="text-[var(--text-main)]"
+            borderClass="border border-[var(--border-color)]"
+            hoverBgClass="hover:bg-[var(--bg-panel)]"
+            iconColor="text-[var(--text-main)]"
+            onClick={handleOpenAssign}
+            roundedClass="rounded-xl"
+            className="px-4 h-full shadow-md"
+          />
+          <ActionButton
+            text="Edit Task"
+            icon={Edit}
+            onClick={handleOpenEdit}
+            roundedClass="rounded-xl"
+            className="px-4 h-full shadow-md"
+          />
+          <ActionButton
+            text="Delete"
+            icon={Trash2}
+            bgClass="bg-[var(--color-danger)]"
+            hoverBgClass="hover:bg-red-600"
+            onClick={handleOpenDelete}
+            roundedClass="rounded-xl"
+            className="px-4 h-full shadow-md"
+          />
         </div>
       </div>
 

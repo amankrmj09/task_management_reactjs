@@ -19,6 +19,7 @@ function TeamPage() {
   const dispatch = useDispatch();
 
   const { members, pagination, isLoading, error } = useSelector((state) => state.team);
+  const { user } = useSelector((state) => state.auth);
 
   const [isInviteOpen, setIsInviteOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState(null);
@@ -56,6 +57,8 @@ function TeamPage() {
     setMemberToDelete(memberId);
   };
 
+  const displayMembers = members?.filter((m) => m.id !== user?.id) || [];
+
   return (
     <div className="space-y-6">
       <TeamHeader onInvite={() => setIsInviteOpen(true)} />
@@ -67,7 +70,7 @@ function TeamPage() {
       ) : (
         <div className="space-y-4">
           <TeamList 
-            members={members} 
+            members={displayMembers} 
             onEdit={setSelectedMember} 
             onDelete={handleDelete}
           />

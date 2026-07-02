@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchTasks, deleteTask } from "../redux/taskThunk";
@@ -7,7 +7,8 @@ import {
   fetchProject,
 } from "../../projects/redux/projectThunk";
 
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
+import { Plus } from "lucide-react";
 import Modal from "../../../components/common/Modal";
 import Dropdown from "../../../components/common/Dropdown";
 
@@ -32,6 +33,8 @@ function TasksPage() {
 
   const [viewMode, setViewMode] = useState("list");
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+
+  const handleOpenCreate = useCallback(() => setIsCreateOpen(true), []);
 
   useEffect(() => {
     dispatch(fetchProjects());
@@ -69,9 +72,10 @@ function TasksPage() {
               label={selectedProject ? selectedProject.name : "Select Project"}
               items={projects.map((project) => ({ label: project.name, value: project.id }))}
               onSelect={(value) => handleProjectChange({ target: { value } })}
+              buttonClassName="h-full"
             />
 
-            <div className="flex items-center gap-2 rounded-xl border border-[var(--border-color)] glass-card p-1">
+            <div className="flex items-stretch gap-2 rounded-xl border border-[var(--border-color)] glass-card p-1 h-full">
               <button
                 type="button"
                 onClick={() => setViewMode("list")}
@@ -96,13 +100,14 @@ function TasksPage() {
               </button>
             </div>
 
-            <Button
-              className="!px-4 !text-sm"
-              onClick={() => setIsCreateOpen(true)}
+            <ActionButton
+              text="New Task"
+              icon={Plus}
+              onClick={handleOpenCreate}
               disabled={!selectedProject?.id}
-            >
-              New Task
-            </Button>
+              roundedClass="rounded-xl"
+              className="px-4 h-full shadow-md"
+            />
           </>
         }
       />

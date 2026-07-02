@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Input from "../../../components/common/Input";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
 
 import { changePassword } from "../../uesrs/redux/userThunk";
 import { showErrorToast, showSuccessToast } from "../../../lib/toast";
@@ -29,7 +29,7 @@ function ChangePasswordForm() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     if (
@@ -65,7 +65,7 @@ function ChangePasswordForm() {
     } else if (result?.error) {
       showErrorToast(result.error);
     }
-  };
+  }, [dispatch, formData]);
 
   return (
     <form
@@ -100,9 +100,14 @@ function ChangePasswordForm() {
         <p className="text-sm text-red-500">{formError || error}</p>
       )}
 
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Updating..." : "Change Password"}
-      </Button>
+      <div className="flex justify-end mt-4">
+        <ActionButton 
+          type="submit" 
+          disabled={isLoading}
+          text={isLoading ? "Updating..." : "Change Password"}
+          className="w-max px-8 h-[48px]"
+        />
+      </div>
     </form>
   );
 }

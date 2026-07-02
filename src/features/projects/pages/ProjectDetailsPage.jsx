@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -6,7 +6,8 @@ import { fetchProject, deleteProject } from "../redux/projectThunk";
 import { fetchTasks } from "../../tasks/redux/taskThunk";
 import { removeProjectMemberApi } from "../api/projectApi";
 
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
+import { Edit, UserPlus, Plus, Trash2 } from "lucide-react";
 import Modal from "../../../components/common/Modal";
 
 import ProjectDetails from "../components/ProjectDetails";
@@ -40,12 +41,14 @@ function ProjectDetailsPage() {
   }, [dispatch, projectId]);
 
   const [isEditOpen, setIsEditOpen] = useState(false);
-
   const [isAddMemberOpen, setIsAddMemberOpen] = useState(false);
-
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
-
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
+
+  const handleOpenEdit = useCallback(() => setIsEditOpen(true), []);
+  const handleOpenAddMember = useCallback(() => setIsAddMemberOpen(true), []);
+  const handleOpenAddTask = useCallback(() => setIsAddTaskOpen(true), []);
+  const handleOpenDelete = useCallback(() => setIsDeleteConfirmOpen(true), []);
 
   const handleRemoveMember = async (email) => {
     try {
@@ -71,24 +74,52 @@ function ProjectDetailsPage() {
     <>
       {admin && (
         <>
-          <Button variant="secondary" onClick={() => setIsEditOpen(true)}>
-            Edit Project
-          </Button>
+          <ActionButton
+            text="Edit Project"
+            icon={Edit}
+            bgClass="bg-[var(--bg-panel-hover)]"
+            textClass="text-[var(--text-main)]"
+            borderClass="border border-[var(--border-color)]"
+            hoverBgClass="hover:bg-[var(--bg-panel)]"
+            iconColor="text-[var(--text-main)]"
+            onClick={handleOpenEdit}
+            roundedClass="rounded-xl"
+            className="px-4 h-full shadow-md"
+          />
 
-          <Button onClick={() => setIsAddMemberOpen(true)}>Add Member</Button>
+          <ActionButton
+            text="Add Member"
+            icon={UserPlus}
+            bgClass="bg-[var(--bg-panel-hover)]"
+            textClass="text-[var(--text-main)]"
+            borderClass="border border-[var(--border-color)]"
+            hoverBgClass="hover:bg-[var(--bg-panel)]"
+            iconColor="text-[var(--text-main)]"
+            onClick={handleOpenAddMember}
+            roundedClass="rounded-xl"
+            className="px-4 h-full shadow-md"
+          />
         </>
       )}
 
-      <Button onClick={() => setIsAddTaskOpen(true)}>Add Task</Button>
+      <ActionButton
+        text="Add Task"
+        icon={Plus}
+        onClick={handleOpenAddTask}
+        roundedClass="rounded-xl"
+        className="px-4 h-full shadow-md"
+      />
 
       {admin && (
-        <button
-          type="button"
-          onClick={() => setIsDeleteConfirmOpen(true)}
-          className="rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 transition hover:bg-red-100"
-        >
-          Delete
-        </button>
+        <ActionButton
+          text="Delete"
+          icon={Trash2}
+          bgClass="bg-[var(--color-danger)]"
+          hoverBgClass="hover:bg-red-600"
+          onClick={handleOpenDelete}
+          roundedClass="rounded-xl"
+          className="px-4 h-full shadow-md"
+        />
       )}
     </>
   );
@@ -99,6 +130,7 @@ function ProjectDetailsPage() {
         project={{ ...selectedProject, tasks: tasks || [] }}
         actions={actions}
         onRemoveMember={admin ? handleRemoveMember : undefined}
+        currentUserEmail={user?.email}
       />
 
       {admin && (

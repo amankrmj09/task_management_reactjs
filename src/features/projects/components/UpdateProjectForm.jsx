@@ -1,9 +1,9 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Input from "../../../components/common/Input";
 import TextArea from "../../../components/common/TextArea";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
 import Dropdown from "../../../components/common/Dropdown";
 
 import { editProject } from "../redux/projectThunk";
@@ -42,7 +42,7 @@ function UpdateProjectForm({ project, onSuccess }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setFormError("");
 
@@ -54,7 +54,7 @@ function UpdateProjectForm({ project, onSuccess }) {
     await dispatch(editProject(activeProject.id, formData));
 
     onSuccess?.();
-  };
+  }, [dispatch, activeProject, formData, onSuccess]);
 
   return (
     <form
@@ -93,9 +93,14 @@ function UpdateProjectForm({ project, onSuccess }) {
 
       {formError && <p className="text-sm text-red-500">{formError}</p>}
 
-      <Button type="submit" disabled={isLoading} className="w-full">
-        {isLoading ? "Updating..." : "Update Project"}
-      </Button>
+      <div className="flex justify-end mt-4">
+        <ActionButton
+          type="submit"
+          text={isLoading ? "Updating..." : "Update Project"}
+          className="w-max px-8 h-[48px]"
+          disabled={isLoading}
+        />
+      </div>
     </form>
   );
 }

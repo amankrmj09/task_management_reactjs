@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Input from "../../../components/common/Input";
 import TextArea from "../../../components/common/TextArea";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
 import Dropdown from "../../../components/common/Dropdown";
+import DatePicker from "../../../components/common/DatePicker";
 
 import { editTask, updateTaskStatus } from "../redux/taskThunk";
 
@@ -54,7 +55,7 @@ function UpdateTaskForm({ task, onSuccess }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     setFormError("");
 
@@ -85,7 +86,7 @@ function UpdateTaskForm({ task, onSuccess }) {
     await dispatch(editTask(projectId, activeTask.id, payload));
 
     onSuccess?.();
-  };
+  }, [dispatch, activeTask, projectId, formData, onSuccess]);
 
   return (
     <form
@@ -145,9 +146,8 @@ function UpdateTaskForm({ task, onSuccess }) {
         </div>
       </div>
 
-      <Input
+      <DatePicker
         label="Due Date"
-        type="date"
         name="dueDate"
         value={formData.dueDate}
         onChange={handleChange}
@@ -163,9 +163,14 @@ function UpdateTaskForm({ task, onSuccess }) {
 
       {formError && <p className="text-sm text-red-500">{formError}</p>}
 
-      <Button type="submit" disabled={isLoading} className="w-full">
-        {isLoading ? "Updating..." : "Update Task"}
-      </Button>
+      <div className="flex justify-end mt-4">
+        <ActionButton
+          type="submit"
+          text={isLoading ? "Updating..." : "Update Task"}
+          className="w-max px-8 h-[48px]"
+          disabled={isLoading}
+        />
+      </div>
     </form>
   );
 }

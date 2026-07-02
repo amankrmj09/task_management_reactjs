@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Input from "../../../components/common/Input";
 import TextArea from "../../../components/common/TextArea";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
 import Dropdown from "../../../components/common/Dropdown";
+import DatePicker from "../../../components/common/DatePicker";
 
 import { createTask } from "../redux/taskThunk";
 
@@ -35,7 +36,7 @@ function TaskForm({ onSuccess }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     if (!selectedProject?.id) {
@@ -45,7 +46,6 @@ function TaskForm({ onSuccess }) {
 
     const payload = {
       ...formData,
-
       tags: formData.tags
         .split(",")
         .map((tag) => tag.trim())
@@ -66,7 +66,7 @@ function TaskForm({ onSuccess }) {
         tags: "",
       });
     }
-  };
+  }, [dispatch, selectedProject?.id, formData, onSuccess]);
 
   return (
     <form
@@ -115,9 +115,8 @@ function TaskForm({ onSuccess }) {
           />
         </div>
 
-        <Input
+        <DatePicker
           label="Due Date"
-          type="date"
           name="dueDate"
           value={formData.dueDate}
           onChange={handleChange}
@@ -136,9 +135,14 @@ function TaskForm({ onSuccess }) {
         <p className="text-sm text-red-500">{formError || error}</p>
       )}
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
-        {isLoading ? "Creating..." : "Create Task"}
-      </Button>
+      <div className="flex justify-end mt-4">
+        <ActionButton
+          type="submit"
+          text={isLoading ? "Creating..." : "Create Task"}
+          className="w-max px-8 h-[48px]"
+          disabled={isLoading}
+        />
+      </div>
     </form>
   );
 }

@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 import Modal from "../../../components/common/Modal";
 import Input from "../../../components/common/Input";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
 
 import { addProjectMemberApi } from "../api/projectApi";
 
@@ -23,7 +23,7 @@ function AddMemberModal({ isOpen, onClose, projectId, onSuccess }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     try {
@@ -39,7 +39,7 @@ function AddMemberModal({ isOpen, onClose, projectId, onSuccess }) {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [projectId, formData, onSuccess, onClose]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Add Member">
@@ -70,9 +70,14 @@ function AddMemberModal({ isOpen, onClose, projectId, onSuccess }) {
           </select>
         </div>
 
-        <Button type="submit" disabled={isLoading} className="w-full">
-          {isLoading ? "Adding..." : "Add Member"}
-        </Button>
+        <div className="flex justify-end mt-4">
+          <ActionButton
+            type="submit"
+            disabled={isLoading}
+            text={isLoading ? "Adding..." : "Add Member"}
+            className="w-max px-8 h-[48px]"
+          />
+        </div>
       </form>
     </Modal>
   );

@@ -1,37 +1,73 @@
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import TaskCard from "../../tasks/components/TaskCard";
 
 function OverdueTasks() {
   const { stats, adminStats } = useSelector((state) => state.dashboard);
+  const [activeTab, setActiveTab] = useState("OVERDUE");
 
-  const overdueTasks =
+  const overdueTasksList =
     stats?.overdueTaskList ||
     adminStats?.overdueTaskList ||
     stats?.overdueTasksList ||
     adminStats?.overdueTasksList ||
     [];
 
+  const recentTasksList = 
+    stats?.recentTasks || 
+    adminStats?.recentTasks || 
+    [];
+
+  const combinedTasks = [...overdueTasksList, ...recentTasksList];
+  const criticalMap = new Map();
+  combinedTasks.forEach((t) => {
+    if (t.priority === "CRITICAL") {
+      criticalMap.set(t.id, t);
+    }
+  });
+  const criticalTasksList = Array.from(criticalMap.values());
+
+  const displayedTasks = activeTab === "OVERDUE" ? overdueTasksList : criticalTasksList;
+
   return (
     <div className="rounded-2xl glass-card p-6 shadow-sm">
-      <h2 className="mb-4 text-xl font-semibold text-[var(--text-main)]">
-        Overdue Tasks
-      </h2>
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-[var(--text-main)]">
+          {activeTab === "OVERDUE" ? "Overdue Tasks" : "Critical Tasks"}
+        </h2>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setActiveTab("OVERDUE")}
+            className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors ${
+              activeTab === "OVERDUE"
+                ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                : "text-[var(--text-muted)] hover:bg-[var(--bg-panel-hover)]"
+            }`}
+          >
+            Overdue
+          </button>
+          <button
+            onClick={() => setActiveTab("CRITICAL")}
+            className={`rounded-lg px-3 py-1 text-sm font-medium transition-colors ${
+              activeTab === "CRITICAL"
+                ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400"
+                : "text-[var(--text-muted)] hover:bg-[var(--bg-panel-hover)]"
+            }`}
+          >
+            Critical
+          </button>
+        </div>
+      </div>
 
       <div className="space-y-4">
-        {overdueTasks.length > 0 ? (
-          overdueTasks.slice(0, 2).map((task) => (
-            <Link key={task.id} to={`/tasks/${task.id}`} className="group flex items-center justify-between rounded-xl border border-red-100 glass-card p-4 shadow-sm transition hover:shadow-md hover:border-red-200">
-              <div>
-                <h3 className="font-medium text-[var(--text-main)] transition-colors group-hover:text-red-600">{task.title}</h3>
-                <p className="mt-0.5 text-xs text-red-500">Due: {task.dueDate}</p>
-              </div>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-red-500 opacity-0 transition group-hover:opacity-100" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
-              </svg>
-            </Link>
+        {displayedTasks.length > 0 ? (
+          displayedTasks.slice(0, 2).map((task) => (
+            <TaskCard key={task.id} task={task} />
           ))
         ) : (
-          <p className="text-[var(--text-muted)]">No overdue tasks</p>
+          <p className="text-[var(--text-muted)]">
+            {activeTab === "OVERDUE" ? "No overdue tasks" : "No critical tasks"}
+          </p>
         )}
       </div>
     </div>

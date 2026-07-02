@@ -6,6 +6,7 @@ function Dropdown({
   onSelect,
   align = "left",
   className = "",
+  buttonClassName = "py-3",
   fullWidth = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +42,7 @@ function Dropdown({
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`rounded-xl border border-[var(--border-color)] glass-card px-4 py-3 text-sm font-medium text-[var(--text-main)] transition hover:bg-[var(--bg-panel-hover)] flex items-center justify-between ${fullWidth ? 'w-full' : ''}`}
+        className={`rounded-xl border border-[var(--border-color)] glass-card px-4 ${buttonClassName} text-sm font-medium text-[var(--text-main)] transition hover:bg-[var(--bg-panel-hover)] flex items-center justify-between ${fullWidth ? 'w-full' : ''}`}
       >
         <span>{label}</span>
         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-[var(--text-muted)]" viewBox="0 0 20 20" fill="currentColor">

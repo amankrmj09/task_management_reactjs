@@ -3,7 +3,7 @@ import ProjectStats from "./ProjectStats";
 import MemberList from "./MemberList";
 import TaskCard from "../../tasks/components/TaskCard";
 
-function ProjectDetails({ project, actions, onRemoveMember }) {
+function ProjectDetails({ project, actions, onRemoveMember, currentUserEmail }) {
   if (!project) {
     return <p className="text-[var(--text-muted)]">No project selected</p>;
   }
@@ -30,6 +30,7 @@ function ProjectDetails({ project, actions, onRemoveMember }) {
           <MemberList
             members={project.members || []}
             onRemove={onRemoveMember}
+            currentUserEmail={currentUserEmail}
           />
         </div>
 

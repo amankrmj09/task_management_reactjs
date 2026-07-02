@@ -1,7 +1,17 @@
+import { useCallback } from "react";
 import RoleBadge from "./RoleBadge";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
+import { Edit, Trash2, UserMinus } from "lucide-react";
 
 function TeamList({ members, onEdit, onDelete }) {
+  const handleEditClick = useCallback((member) => {
+    if (onEdit) onEdit(member);
+  }, [onEdit]);
+
+  const handleDeleteClick = useCallback((id) => {
+    if (onDelete) onDelete(id);
+  }, [onDelete]);
+
   if (!members?.length) {
     return (
       <div className="rounded-2xl glass-card p-10 text-center shadow-sm">
@@ -37,13 +47,26 @@ function TeamList({ members, onEdit, onDelete }) {
                 <td className="px-6 py-4 text-right">
                   <div className="flex justify-end gap-3">
                     {member.role !== "INVITED" && (
-                      <Button size="sm" onClick={() => onEdit(member)}>
-                        Edit
-                      </Button>
+                      <ActionButton
+                        text="Edit"
+                        icon={Edit}
+                        bgClass="bg-[var(--bg-panel-hover)]"
+                        textClass="text-[var(--text-main)]"
+                        borderClass="border border-[var(--border-color)]"
+                        hoverBgClass="hover:bg-[var(--bg-panel)]"
+                        iconColor="text-[var(--text-main)]"
+                        className="px-4 h-[36px] text-sm shadow-sm inline-flex w-max"
+                        onClick={() => handleEditClick(member)}
+                      />
                     )}
-                    <Button size="sm" variant="danger" className="!bg-red-600 !text-white" onClick={() => onDelete(member.id)}>
-                      {member.role === "INVITED" ? "Remove" : "Delete"}
-                    </Button>
+                    <ActionButton
+                      text={member.role === "INVITED" ? "Remove" : "Delete"}
+                      icon={member.role === "INVITED" ? UserMinus : Trash2}
+                      bgClass="bg-[var(--color-danger)]"
+                      hoverBgClass="hover:bg-red-600"
+                      className="px-4 h-[36px] text-sm shadow-sm inline-flex w-max"
+                      onClick={() => handleDeleteClick(member.id)}
+                    />
                   </div>
                 </td>
               </tr>

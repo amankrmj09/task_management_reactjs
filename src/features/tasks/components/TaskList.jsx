@@ -1,5 +1,7 @@
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
+import { Trash2 } from "lucide-react";
 
 const PRIORITY_COLORS = {
   LOW: "bg-[var(--bg-panel-hover)] text-[var(--text-muted)]",
@@ -17,6 +19,11 @@ const STATUS_COLORS = {
 
 function TaskList({ tasks, onDeleteTask }) {
   const navigate = useNavigate();
+
+  const handleDeleteClick = useCallback((e, taskId) => {
+    e.stopPropagation();
+    if (onDeleteTask) onDeleteTask(taskId);
+  }, [onDeleteTask]);
 
   if (!tasks?.length) {
     return (
@@ -89,17 +96,14 @@ function TaskList({ tasks, onDeleteTask }) {
                   }) : "-"}
                 </td>
                 <td className="px-6 py-4 text-right">
-                  <Button 
-                    size="sm" 
-                    variant="danger" 
-                    className="!bg-red-600 !text-white inline-block" 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (onDeleteTask) onDeleteTask(task.id);
-                    }}
-                  >
-                    Delete
-                  </Button>
+                    <ActionButton
+                      text="Delete"
+                      icon={Trash2}
+                      bgClass="bg-[var(--color-danger)]"
+                      hoverBgClass="hover:bg-red-600"
+                      className="px-4 h-[36px] text-sm shadow-sm inline-flex w-max float-right"
+                      onClick={(e) => handleDeleteClick(e, task.id)}
+                    />
                 </td>
               </tr>
             ))}

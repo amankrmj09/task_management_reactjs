@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function MemberList({ members = [], onRemove }) {
+function MemberList({ members = [], onRemove, currentUserEmail }) {
   const [removingId, setRemovingId] = useState(null);
 
   if (!members.length) {
@@ -23,47 +23,51 @@ function MemberList({ members = [], onRemove }) {
 
   return (
     <div className="space-y-3">
-      {members.map((member) => (
-        <div
-          key={member.id}
-          className="flex items-center justify-between rounded-xl border p-4 gap-2"
-        >
-          <div className="flex min-w-0 items-center gap-3">
-            <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
-              {member.name?.charAt(0)?.toUpperCase() || "?"}
+      {members.map((member) => {
+        const isCurrentUser = currentUserEmail && member.email === currentUserEmail;
+
+        return (
+          <div
+            key={member.id}
+            className="flex items-center justify-between rounded-xl border p-4 gap-2"
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm font-bold text-white">
+                {member.name?.charAt(0)?.toUpperCase() || "?"}
+              </div>
+
+              <div className="min-w-0">
+                <h3 className="truncate font-semibold text-[var(--text-main)]">
+                  {member.name} {isCurrentUser && "(You)"}
+                </h3>
+
+                <p className="truncate text-sm text-[var(--text-muted)]">
+                  {member.email}
+                </p>
+              </div>
             </div>
 
-            <div className="min-w-0">
-              <h3 className="truncate font-semibold text-[var(--text-main)]">
-                {member.name}
-              </h3>
+            <div className="flex shrink-0 items-center gap-2">
+              <span className="shrink-0 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
+                {member.projectRole || member.role}
+              </span>
 
-              <p className="truncate text-sm text-[var(--text-muted)]">
-                {member.email}
-              </p>
+              {onRemove && !isCurrentUser && (
+                <button
+                  type="button"
+                  onClick={() => handleRemove(member.email)}
+                  disabled={removingId === member.id}
+                  className="rounded-lg px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+                >
+                  {removingId === member.id
+                    ? "Removing..."
+                    : "Remove"}
+                </button>
+              )}
             </div>
           </div>
-
-          <div className="flex shrink-0 items-center gap-2">
-            <span className="shrink-0 rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-              {member.projectRole || member.role}
-            </span>
-
-            {onRemove && (
-              <button
-                type="button"
-                onClick={() => handleRemove(member.email)}
-                disabled={removingId === member.id}
-                className="rounded-lg px-3 py-1.5 text-xs font-medium text-red-600 transition hover:bg-red-50 disabled:opacity-50"
-              >
-                {removingId === member.id
-                  ? "Removing..."
-                  : "Remove"}
-              </button>
-            )}
-          </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

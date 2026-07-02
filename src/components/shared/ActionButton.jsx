@@ -8,6 +8,7 @@ const ActionButton = ({
   bgClass = "bg-[var(--color-primary)]", 
   textClass = "text-white", 
   borderClass = "border-transparent",
+  roundedClass = "rounded-full",
   iconColor = "text-white",
   hoverBgClass = "bg-white/20",
   className = "px-6 h-[48px]",
@@ -18,7 +19,7 @@ const ActionButton = ({
   iconAnimationDirection = "ttb"
 }) => {
 
-  const baseClasses = `group relative rounded-full border ${borderClass} ${bgClass} ${textClass} font-bold text-sm sm:text-base shadow-sm flex items-center justify-center transition-colors overflow-hidden isolate ${className} ${disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`;
+  const baseClasses = `group relative ${roundedClass} border ${borderClass} ${bgClass} ${textClass} font-bold text-sm sm:text-base shadow-sm flex items-center justify-center transition-colors overflow-hidden isolate ${className} ${disabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`;
 
   const InnerContent = () => (
     <>

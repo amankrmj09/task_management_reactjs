@@ -8,7 +8,7 @@ import DashboardStats from "../components/DashboardStats";
 import TaskSummary from "../components/TaskSummary";
 import RecentTasks from "../components/RecentTasks";
 import OverdueTasks from "../components/OverdueTasks";
-import ActivityChart from "../components/ActivityChart";
+import RecentActivity from "../components/RecentActivity";
 import RecentProjects from "../components/RecentProjects";
 
 function DashboardPage() {
@@ -38,7 +38,7 @@ function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <ActivityChart />
+        <RecentActivity />
 
         <RecentProjects />
       </div>

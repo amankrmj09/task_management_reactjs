@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchProjects, deleteProject } from "../redux/projectThunk";
 import { requestJoinProjectApi } from "../api/projectApi";
 
 import Modal from "../../../components/common/Modal";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
+import { Plus, UserPlus } from "lucide-react";
 import Input from "../../../components/common/Input";
 
 import PaginationControls from "../../../components/common/PaginationControls";
@@ -38,6 +39,9 @@ function ProjectsPage() {
   useEffect(() => {
     dispatch(fetchProjects());
   }, [dispatch]);
+
+  const handleOpenCreate = useCallback(() => setIsCreateOpen(true), []);
+  const handleOpenJoin = useCallback(() => setIsJoinOpen(true), []);
 
   const handleDeleteProject = async () => {
     if (projectToDelete) {
@@ -76,17 +80,26 @@ function ProjectsPage() {
         actions={
           <>
             {admin ? (
-              <Button className="!px-4 !py-2 h-[42px]" onClick={() => setIsCreateOpen(true)}>
-                New Project
-              </Button>
+              <ActionButton 
+                text="New Project" 
+                icon={Plus} 
+                onClick={handleOpenCreate} 
+                roundedClass="rounded-xl"
+                className="px-4 h-full shadow-md" 
+              />
             ) : (
-              <Button
-                variant="secondary"
-                className="!px-4 !py-2 h-[42px]"
-                onClick={() => setIsJoinOpen(true)}
-              >
-                Request to Join
-              </Button>
+              <ActionButton
+                text="Request to Join"
+                icon={UserPlus}
+                bgClass="bg-[var(--bg-panel-hover)]"
+                textClass="text-[var(--text-main)]"
+                borderClass="border border-[var(--border-color)]"
+                hoverBgClass="hover:bg-[var(--bg-panel)]"
+                iconColor="text-[var(--text-main)]"
+                onClick={handleOpenJoin}
+                roundedClass="rounded-xl"
+                className="px-4 h-full shadow-md"
+              />
             )}
           </>
         }
@@ -144,13 +157,14 @@ function ProjectsPage() {
             A request will be sent to the project administrators.
           </p>
 
-          <Button
-            type="submit"
-            className="w-full"
-            disabled={joinLoading || !joinProjectId.trim()}
-          >
-            {joinLoading ? "Requesting..." : "Request to Join"}
-          </Button>
+          <div className="flex justify-end mt-4">
+            <ActionButton
+              type="submit"
+              text={joinLoading ? "Requesting..." : "Request to Join"}
+              disabled={joinLoading || !joinProjectId.trim()}
+              className="w-max px-8 h-[48px]"
+            />
+          </div>
         </form>
       </Modal>
 

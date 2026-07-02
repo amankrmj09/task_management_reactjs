@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { TASK_STATUS } from "../../../utils/constants";
@@ -107,8 +108,45 @@ function KanbanBoard({ tasks }) {
     columns[task.status]?.push(task);
   });
 
+  const scrollRef = useRef(null);
+  const isDown = useRef(false);
+  const startX = useRef(0);
+  const scrollLeft = useRef(0);
+
+  const handleMouseDown = (e) => {
+    isDown.current = true;
+    scrollRef.current.classList.add('cursor-grabbing');
+    startX.current = e.pageX - scrollRef.current.offsetLeft;
+    scrollLeft.current = scrollRef.current.scrollLeft;
+  };
+
+  const handleMouseLeave = () => {
+    isDown.current = false;
+    scrollRef.current.classList.remove('cursor-grabbing');
+  };
+
+  const handleMouseUp = () => {
+    isDown.current = false;
+    scrollRef.current.classList.remove('cursor-grabbing');
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDown.current) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX.current) * 2;
+    scrollRef.current.scrollLeft = scrollLeft.current - walk;
+  };
+
   return (
-    <div className="flex gap-4 overflow-x-auto pb-4">
+    <div 
+      ref={scrollRef}
+      onMouseDown={handleMouseDown}
+      onMouseLeave={handleMouseLeave}
+      onMouseUp={handleMouseUp}
+      onMouseMove={handleMouseMove}
+      className="flex gap-4 overflow-x-auto pb-4 cursor-grab select-none"
+    >
       {Object.entries(columns).map(
         ([status, columnTasks]) => {
           const colors = STATUS_COLORS[status] || STATUS_COLORS.TODO;

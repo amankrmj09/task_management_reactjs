@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import Input from "../../../components/common/Input";
-import Button from "../../../components/common/Button";
+import ActionButton from "../../../components/shared/ActionButton";
 
 import {
   fetchCurrentUserProfile,
@@ -47,7 +47,7 @@ function ProfileForm() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
 
     const trimmedName = formData.name.trim();
@@ -71,7 +71,7 @@ function ProfileForm() {
     } else if (result?.error) {
       showErrorToast(result.error);
     }
-  };
+  }, [dispatch, formData.name]);
 
   return (
     <form
@@ -107,9 +107,14 @@ function ProfileForm() {
         <p className="text-sm text-red-500">{formError || error}</p>
       )}
 
-      <Button type="submit" disabled={isLoading}>
-        {isLoading ? "Updating..." : "Update Profile"}
-      </Button>
+      <div className="flex justify-end mt-4">
+        <ActionButton 
+          type="submit" 
+          disabled={isLoading}
+          text={isLoading ? "Updating..." : "Update Profile"}
+          className="w-max px-8 h-[48px]"
+        />
+      </div>
     </form>
   );
 }
